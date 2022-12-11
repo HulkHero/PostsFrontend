@@ -1,0 +1,23 @@
+div.MuiTabs-flexContainer > .MuiButtonBase-root{
+    min-width: 85px !important;
+    
+    
+} 
+div.MuiTabs-flexContainer > .MuiButtonBase-root:hover{
+    min-width: 85px !important;
+    border-radius: 40px;
+    background-color:rgba(94, 85, 85, 0.14) ;
+    padding:0px;
+
+    /* margin: 12px 16px */
+} 
+
+
+.ns{
+    position: fixed; /* Make it stick/fixed */
+    display: block;
+top: 0px;
+height:auto;
+opacity: 1;
+transition: height 10s;
+}
