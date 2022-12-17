@@ -16,14 +16,24 @@ import Profile from './Pages/Profile';
 function App() {
   const a = useContext(NoteContext)
   const [islogged, setIslogged] = useState(false);
+  const getStorageData = async () => {
+    const token = await sessionStorage.getItem("token");
+    a.setToken(token)
+    const id = await sessionStorage.getItem("id");
+    a.setId(id)
+    const name = await sessionStorage.getItem("creatername");
+    a.setcreatername(name)
+    console.log("getting Data from storage")
+  }
   useEffect(() => {
+    getStorageData()
     if (a.token) {
       setIslogged(true);
     }
 
 
 
-  }, [a.token])
+  },)
 
 
 

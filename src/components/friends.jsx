@@ -40,7 +40,7 @@ export default function AlignItemsList() {
     </div>
     </ListItem>
     <Divider variant='middle '></Divider>
-    {data && data.map((element,index)=>{
+    {data.length>0 ? data.map((element,index)=>{
           let img12= avatar[index]
           console.log(img12,"img12")
           const base64= btoa(new Uint8Array(img12.avatar.data.data).reduce(function (data, byte) {
@@ -52,7 +52,9 @@ export default function AlignItemsList() {
       <>
        <FriendItem props={element} img={img} id={a.id} ></FriendItem>
      </>)
-    })}
+    })
+    :<Typography sx={{ml:"20px"}}>No Friends to show</Typography>
+    }
     </List>
     
     </>

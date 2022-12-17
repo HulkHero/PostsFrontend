@@ -13,19 +13,22 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Axios from 'axios';
-import { Snackbar, Alert } from '@mui/material';
+import { Snackbar, Alert, CircularProgress } from '@mui/material';
+import { useTheme } from "@mui/material"
 
-import theme from "../Theme";
 
 export default function SignUp() {
+  const theme = useTheme()
   const [errorMail, setErrorMail] = useState(false)
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true)
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -40,6 +43,7 @@ export default function SignUp() {
       }).then((response) => {
         console.log(response)
         setOpen(true)
+        setLoading(false)
         // console.log(response.data.token)
         // a.setToken(response.data.token)
 
@@ -48,6 +52,7 @@ export default function SignUp() {
     else {
       alert("invalid input")
       setErrorMail("true")
+      setLoading(false)
     }
     ;
   };
@@ -115,15 +120,30 @@ export default function SignUp() {
                 />
               </Grid>
 
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign Up
-              </Button>
+              <Box sx={{ m: 1, position: 'relative' }}>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign Up
+                </Button>
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      // color: green[500],
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />
+                )}
+              </Box>
 
             </Grid>
           </Box>

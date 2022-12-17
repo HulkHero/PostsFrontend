@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Paper, Button } from "@mui/material"
+import { Paper, Button, Typography } from "@mui/material"
 import { useState, useEffect, useContext } from 'react'
 import Cards from '../components/Cards';
 import Axios from "axios";
@@ -9,6 +9,7 @@ import NoteContext from '../context/noteContext'
 const MyPosts = () => {
   const a = useContext(NoteContext)
   const [lik, setLik] = useState()
+  const [text, setText] = useState("Loading...")
   if (a.token) { }
   else {
     const getToken = sessionStorage.getItem("token");
@@ -34,6 +35,7 @@ const MyPosts = () => {
     }).then((response) => {
       if (response.status == 400) {
         alert("you are not authorized")
+        setText("You have not posted anything")
       }
       else {
         setData(response.data);
@@ -45,7 +47,7 @@ const MyPosts = () => {
 
 
     }).catch(response => {
-      alert(response.status, "you are not authorized")
+      setText("you have not posted anything")
     })
 
   }, [a.id])
@@ -92,7 +94,7 @@ const MyPosts = () => {
 
       <Paper evaluation={2} style={{ minWidth: "100%", display: "flex:", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100%", backgroundColor: "whitesmoke" }} spacing={2}>
 
-        {data && data.map((element) => {
+        {data.length > 0 ? data.map((element) => {
           const base64 = btoa(new Uint8Array(element.image.data.data).reduce(function (data, byte) {
             return data + String.fromCharCode(byte);
           }, ''));
@@ -106,7 +108,9 @@ const MyPosts = () => {
             </>
           )
 
-        })}
+        })
+          : <Typography sx={{ ml: "auto", mr: "auto" }}>{text} </Typography>
+        }
 
 
       </Paper>

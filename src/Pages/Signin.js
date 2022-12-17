@@ -20,9 +20,10 @@ import { Modal } from '@mui/material';
 import { Snackbar } from '@mui/material'
 import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
-const theme = createTheme();
-
+import CircularProgress from '@mui/material/CircularProgress';
+import { useTheme } from '@mui/system';
+// const theme = createTheme();
+import { green } from '@mui/material/colors';
 function setSessionToken(userToken, id, names) {
   sessionStorage.setItem('token', userToken);
   sessionStorage.setItem('id', id);
@@ -31,12 +32,15 @@ function setSessionToken(userToken, id, names) {
 }
 
 export default function SignIn() {
+  const theme = useTheme()
   const a = useContext(NoteContext)
   const Navigate = useNavigate();
   const [open, setOpen] = useState(false)
   const [openSnack, setOpenSnack] = useState(false)
   const [show, setSignup] = useState(false)
+  const [loading, setLoading] = useState(false)
   const handleSubmit = (event) => {
+    setLoading(true)
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -54,9 +58,10 @@ export default function SignIn() {
       a.setcreatername(response.data.name)
       setOpenSnack(true)
       setSessionToken(response.data.token, response.data.userId, response.data.name)
+      setLoading(false)
       Navigate("/posts")
 
-    }).catch((error) => console.log(error));
+    }).catch((error) => { console.log(error); setLoading(false) });
   };
 
   return (
@@ -126,14 +131,30 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
+          <Box sx={{ m: 1, position: 'relative' }}>
+            <Button
+              type="submit"
+              disabled={loading}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  // color: green[500],
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
+          </Box>
           <Grid container>
             <Grid item xs>
 
