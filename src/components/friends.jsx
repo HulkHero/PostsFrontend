@@ -11,6 +11,7 @@ import NoteContext from "../context/noteContext";
 import {useState ,useEffect,useContext} from "react";
 import "./fri.css"
 import FriendItem from './frienditem';
+
 export default function AlignItemsList() {
 
   const a = useContext(NoteContext)
@@ -41,10 +42,11 @@ export default function AlignItemsList() {
     <Divider variant='middle '></Divider>
     {data && data.map((element,index)=>{
           let img12= avatar[index]
+          console.log(img12,"img12")
           const base64= btoa(new Uint8Array(img12.avatar.data.data).reduce(function (data, byte) {
             return data + String.fromCharCode(byte);
         }, ''));
-      
+         
         const img=`data:image/png;base64,${base64}`
      return(
       <>

@@ -77,8 +77,6 @@ const RecievedFriends = () => {
                     <Icon>
                       <AddCircleOutlineRoundedIcon></AddCircleOutlineRoundedIcon>
                     </Icon>
-                    
-
                </IconButton>
 
               </ListItem>

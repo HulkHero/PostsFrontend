@@ -13,12 +13,17 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Axios from 'axios';
+import { Snackbar, Alert } from '@mui/material';
 
 import theme from "../Theme";
 
 export default function SignUp() {
   const [errorMail, setErrorMail] = useState(false)
+  const [open, setOpen] = useState(false)
 
+  const handleClose = () => {
+    setOpen(false)
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -34,6 +39,7 @@ export default function SignUp() {
 
       }).then((response) => {
         console.log(response)
+        setOpen(true)
         // console.log(response.data.token)
         // a.setToken(response.data.token)
 
@@ -64,6 +70,11 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+              Signed Up Successfully: Login Now
+            </Alert>
+          </Snackbar>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} >
@@ -77,6 +88,7 @@ export default function SignUp() {
                   autoFocus
                 />
               </Grid>
+
 
 
               <Grid item xs={12}>

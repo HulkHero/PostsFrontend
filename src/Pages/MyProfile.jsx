@@ -131,7 +131,7 @@ useEffect( ()=>{
        })
   
   
-    }
+      }
     else{
       console.log("login first")
     }  }
