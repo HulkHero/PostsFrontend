@@ -1,5 +1,5 @@
 import React from 'react'
-import {Paper,Button,Box} from "@mui/material"
+import {Paper,Button,Box, Skeleton, Card, CardHeader, CardMedia} from "@mui/material"
 import { useState ,useEffect} from 'react'
 import Cards from './Cards';
 import Axios from "axios";
@@ -19,6 +19,7 @@ const CardContainer = () => {
  const [lik,setLik]=useState()
  const [skip,setSkip]=useState(0)
  const [hasMore,setHasMore]=useState(true)
+ console.log("data render",data)
 // var skip=0;
  var limit=2;
  if (a.token)
@@ -38,22 +39,28 @@ const CardContainer = () => {
    
   
     useEffect(() => {
-      Axios.get(`https://nice-plum-panda-tam.cyclic.app/batchData/${skip}/${limit}`,{
-        headers:{
-          authorization : a.token,
-        }
-      }).then((response)=>{
-       console.log("response")
-      
-        console.log("response",response)
-         setSkip(2)
-        setData(response.data)
-     
+      if(data.length>0){
 
-    })
+      }
+      else{
+
+        Axios.get(`https://nice-plum-panda-tam.cyclic.app/batchData/${skip}/${limit}`,{
+          headers:{
+            authorization : a.token,
+          }
+        }).then((response)=>{
+          console.log("response")
+          
+          console.log("response",response)
+          setSkip(2)
+          // setData(response.data)
+          
+          
+        })
+      }
       
 
-    },[a.token])
+    },[])
 
     const onlike=(id)=>{
       if (a.id){
@@ -112,6 +119,7 @@ const CardContainer = () => {
     <>
    {
     <Paper evaluation={0} sx={{minWidth: "100%",display:"flex:",flexDirection:"column",alignItems:"center",border:"0px",boxShadow:"none",justifyContent:"center",minHeight:"100%",backgroundColor:"#f0f2f5"}} spacing={2}>
+    { data.length > 0 ? 
     <InfiniteScroll
      dataLength={data.length}
      next={fetchMoreData}
@@ -147,6 +155,33 @@ const CardContainer = () => {
     })}
 
 </InfiniteScroll>
+   : <div style={{display:"flex",alignSelf:"center",flexDirection:"column",alignItems:"center"}}> <Card elevation={3} sx={{  maxWidth:{xs:"95%",sm:"75%"}, minWidth:{xs:"95%",sm:"75%"},alignSelf:"center",mb:1,mt:2,borderRadius:"10px"}}>
+    <CardHeader avatar={<Skeleton variant="circular" animation="wave" width={70} height={70}></Skeleton>} 
+     title={<Skeleton  sx={{borderRadius:0}} animation="wave" ></Skeleton>} subheader={<Skeleton variant='rectangular' animation="wave"></Skeleton>} > 
+     </CardHeader>
+     <Skeleton variant="rectangular" animation="wave" sx={{ml:"10px",mr:"10px"}}></Skeleton>
+    
+      <Skeleton variant="rectangular" animation="wave" sx={{minHeight:"200px",minWidth:"250px",maxHeight:"300px",maxWidth:"100%",mt:2,position:"center",justifyContent:"center",objectFit:"scale-down"}}></Skeleton>
+
+    
+      
+    {/* <Skeleton >
+    </Skeleton> */}
+    </Card>
+    <Card elevation={3} sx={{  maxWidth:{xs:"95%",sm:"75%"}, minWidth:{xs:"95%",sm:"75%"},alignSelf:"center",mb:1,mt:2,borderRadius:"10px"}}>
+    <CardHeader avatar={<Skeleton variant="circular" animation="wave" width={70} height={70}></Skeleton>} 
+     title={<Skeleton  sx={{borderRadius:0}} animation="wave" ></Skeleton>} subheader={<Skeleton variant='rectangular' animation="wave"></Skeleton>} > 
+     </CardHeader>
+     <Skeleton variant="rectangular" animation="wave" sx={{ml:"10px",mr:"10px"}}></Skeleton>
+    
+      <Skeleton variant="rectangular" animation="wave" sx={{minHeight:"200px",minWidth:"250px",maxHeight:"300px",maxWidth:"100%",mt:2,position:"center",justifyContent:"center",objectFit:"scale-down"}}></Skeleton>
+
+    
+      
+    {/* <Skeleton >
+    </Skeleton> */}
+    </Card> 
+    </div>}
     </Paper>
 }
     </>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{memo} from 'react'
 import { Card,CardHeader,Avatar,CardMedia,CardContent,Typography,CardActions,IconButton, Container, CardActionArea,Modal,Backdrop,Box,Fade } from '@mui/material';
 import {red} from"@mui/material/colors";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -130,7 +130,7 @@ var result = date.toLocaleDateString('en', options);
   )
 }
 
-export default Cards
+export default memo(Cards)
 
 // <IconButton onClick={()=>{setLike(!like);  if(like==true){props.ondislike(props.id);setnum(props.likes.length++)
 // }else{
