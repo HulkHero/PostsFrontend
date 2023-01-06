@@ -53,7 +53,7 @@ const CardContainer = () => {
           
           console.log("response",response)
           setSkip(2)
-          // setData(response.data)
+          setData(response.data)
           
           
         })
