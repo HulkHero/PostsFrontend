@@ -7,19 +7,27 @@ import axios from 'axios';
 import { useContext } from 'react';
 import NoteContext from '../context/noteContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import CircularProgress from '@mui/material/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress';
+import { useDispatch,useSelector } from 'react-redux';
+import { addData ,concatData, like,dislike} from '../store';
+import {store} from "../store"
+// var items=[];
 const CardContainer = () => {
-  useEffect(() => {
-    console.log(window.scrollY)
+
  
-   },[window.scrollY])
+  // useEffect(() => {
+  //   console.log(window.scrollY)
+ 
+  //  },[window.scrollY])
  // var data;
+ 
  const a= useContext(NoteContext)
- const [data,setData]=useState([])
+//  const [data,setData]=useState([])
  const [lik,setLik]=useState()
  const [skip,setSkip]=useState(0)
  const [hasMore,setHasMore]=useState(true)
- console.log("data render",data)
+//  console.log("data render",data)
+ const dispatch = useDispatch();
 // var skip=0;
  var limit=2;
  if (a.token)
@@ -36,14 +44,18 @@ const CardContainer = () => {
    }
  }
  console.log(window)
-   
-  
+   const dataRedux=useSelector((state)=> state.data.value )
+   console.log("dataRedux",dataRedux)
+    
     useEffect(() => {
-      if(data.length>0){
-
+      if(dataRedux.length>0){
+        // const state=store.getState();
+        // console.log("satate",state)
+        // const getItem= (state)=>state.data.value
+        // items=[...getItem(state)]
+        // console.log("items",items)
       }
       else{
-
         Axios.get(`https://nice-plum-panda-tam.cyclic.app/batchData/${skip}/${limit}`,{
           headers:{
             authorization : a.token,
@@ -53,17 +65,18 @@ const CardContainer = () => {
           
           console.log("response",response)
           setSkip(2)
-          setData(response.data)
-          
-          
+          // setData(response.data)
+          dispatch(addData(response.data))   
         })
+
       }
       
-
-    },[])
-
-    const onlike=(id)=>{
+    })
+      // const data=[...dataRedux];
+    const onlike=(id,key)=>{
+      console.log("key",key)
       if (a.id){
+        dispatch(like({userid:a.id,key:key}))
         Axios.put(`https://nice-plum-panda-tam.cyclic.app/likePost/${id}/${a.id}`).then((response) => {
          
           console.log("response:dislike", response)
@@ -77,13 +90,15 @@ const CardContainer = () => {
      
 
     }
-    const ondislike=(id)=>{
-      
-      Axios.put(`https://nice-plum-panda-tam.cyclic.app/dislikePost/${id}/${a.id}`).then((response) => {
-        setLik(response.data.likes.length);
+    const ondislike=(id,key)=>{
+      if (a.id){
+         dispatch(dislike({userid:a.id,key:key}))
+        Axios.put(`https://nice-plum-panda-tam.cyclic.app/dislikePost/${id}/${a.id}`).then((response) => {
+          setLik(response.data.likes.length);
            
      
       })
+    }
 
    }
 
@@ -97,13 +112,15 @@ const CardContainer = () => {
     
     console.log("skip",skip)
     console.log("limit",limit)
+
     await Axios.get(`https://nice-plum-panda-tam.cyclic.app/batchData/${skip}/${limit}`).then((response)=>{
        
       
-        console.log("response",response)
+        console.log("respose",response)
        
         
-        setData(data.concat(response.data))
+        // setData(data.concat(response.data))
+        dispatch(concatData(response.data))
       
 
     }).catch(response=>{
@@ -119,9 +136,9 @@ const CardContainer = () => {
     <>
    {
     <Paper evaluation={0} sx={{minWidth: "100%",display:"flex:",flexDirection:"column",alignItems:"center",border:"0px",boxShadow:"none",justifyContent:"center",minHeight:"100%",backgroundColor:"#f0f2f5"}} spacing={2}>
-    { data.length > 0 ? 
+    { dataRedux.length > 0 ? 
     <InfiniteScroll
-     dataLength={data.length}
+     dataLength={dataRedux.length}
      next={fetchMoreData}
      hasMore={hasMore}
      loader={ 
@@ -138,7 +155,7 @@ const CardContainer = () => {
       </p>
     }
     >      
-    { data.map((element)=>{
+    { dataRedux.map((element,index)=>{
            const base64= btoa(new Uint8Array(element.image.data.data).reduce(function (data, byte) {
             return data + String.fromCharCode(byte);
         }, ''));
@@ -147,7 +164,7 @@ const CardContainer = () => {
        return (
         <>
         <div style={{display: 'flex',flexDirection: 'column',alignItems:"center"}}>
-         <Cards key={element._id} ondislike={ondislike} userId={a.id} likes={element.likes} id={element._id} name={element.creatername} date={element.date} image={img}  heading={element.heading} caption={element.caption} onlike={onlike} displayLike={lik} isMyPosts={false}></Cards>
+         <Cards key={index} index={index} ondislike={ondislike} userId={a.id} likes={element.likes} id={element._id} name={element.creatername} date={element.date} image={img}  heading={element.heading} caption={element.caption} onlike={onlike} displayLike={lik} isMyPosts={false}></Cards>
         </div>
         </>
       )

@@ -112,17 +112,20 @@ var result = date.toLocaleDateString('en', options);
         </Typography>
       </CardContent>
       <CardActions >
-        <IconButton onClick={()=>{ if(like==true){props.ondislike(props.id);setnum(props.likes.length--);
+        <IconButton onClick={()=>{ if(like==true){props.ondislike(props.id,props.index);
+        // setnum(props.likes.length--);
         setLike(false)
        }else{
-          props.onlike(props.id);
+          props.onlike(props.id,props.index);
           setLike(true)
-          setnum(props.likes.length++)
+          // setnum(props.likes.length++)
         }}} >
          {  like==true? <FavoriteIcon sx={{color:'#ab0909'}} />  :<FavoriteBorderIcon></FavoriteBorderIcon>    
          }
         </IconButton>
         <Typography variant="body1" color="text.primary" sx={{alignSelf:"center"}}>{props.displayLikes? props.displayLikes :props.likes.length}</Typography>
+        <Typography variant="h2" color="text.primary" sx={{alignSelf:"center"}}>{"hello"+props.index}</Typography>
+        
         </CardActions>
         </Card>
         
