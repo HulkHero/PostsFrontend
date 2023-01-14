@@ -64,6 +64,32 @@ export default function SignIn() {
     }).catch((error) => { console.log(error); setLoading(false) });
   };
 
+
+  const handleSubmit2 = () => {
+    setLoading(true)
+    //event.preventDefault();
+    //const data = new FormData(event.currentTarget);
+
+    Axios.post("https://nice-plum-panda-tam.cyclic.app/login", {
+      email: "hammad",
+      password: "hammad"
+
+    }).then((response) => {
+      console.log(response)
+      console.log(response.data.token)
+      console.log("id ", response.data.userId)
+      a.setToken(response.token)
+      a.setId(response.data.userId)
+      console.log(response.token)
+      a.setcreatername(response.data.name)
+      setOpenSnack(true)
+      setSessionToken(response.data.token, response.data.userId, response.data.name)
+      setLoading(false)
+      Navigate("/posts")
+
+    }).catch((error) => { console.log(error); setLoading(false) });
+  };
+
   return (
 
     <Container component="main" maxWidth="xs">
@@ -154,6 +180,13 @@ export default function SignIn() {
                 }}
               />
             )}
+            <Button
+              disabled={loading}
+              fullWidth
+              color="error"
+              variant="contained"
+              onClick={() => handleSubmit2()}
+              sx={{ mt: 3, mb: 2 }}>Login as Hammad</Button>
           </Box>
           <Grid container>
             <Grid item xs>
