@@ -124,7 +124,7 @@ var result = date.toLocaleDateString('en', options);
          }
         </IconButton>
         <Typography variant="body1" color="text.primary" sx={{alignSelf:"center"}}>{props.displayLikes? props.displayLikes :props.likes.length}</Typography>
-        <Typography variant="h2" color="text.primary" sx={{alignSelf:"center"}}>{"hello"+props.index}</Typography>
+        {/* <Typography variant="h2" color="text.primary" sx={{alignSelf:"center"}}>{"hello"+props.index}</Typography> */}
         
         </CardActions>
         </Card>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{memo, Suspense} from 'react'
 import {Paper,Button,Box, Skeleton, Card, CardHeader, CardMedia} from "@mui/material"
 import { useState ,useEffect} from 'react'
 import Cards from './Cards';
@@ -7,11 +7,12 @@ import axios from 'axios';
 import { useContext } from 'react';
 import NoteContext from '../context/noteContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
+// import InfiniteScroll from "react-infinite-scroller"
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch,useSelector } from 'react-redux';
-import { addData ,concatData, like,dislike} from '../store';
+import { addData ,concatData, like,dislike,fetchMoreData} from '../store';
 import {store} from "../store"
-// var items=[];
+
 const CardContainer = () => {
 
  
@@ -71,7 +72,7 @@ const CardContainer = () => {
 
       }
       
-    })
+    },[])
       // const data=[...dataRedux];
     const onlike=(id,key)=>{
       console.log("key",key)
@@ -104,8 +105,13 @@ const CardContainer = () => {
 
    
    console.log("rendering")
+   const more= useSelector((state)=> state.data.fetchMore )
+   const fetchMoreData1=async()=>{
+    
+    if(more===true){
 
-   const fetchMoreData=async()=>{
+
+   
     setSkip(skip+2);
     console.log("inside fetchMoreData")
     
@@ -128,8 +134,10 @@ const CardContainer = () => {
       if (response.response.status ==300){
         console.log("300")
         setHasMore(false)
+        dispatch(fetchMoreData())
       }
     })
+  }
    }
 
   return (
@@ -139,8 +147,8 @@ const CardContainer = () => {
     { dataRedux.length > 0 ? 
     <InfiniteScroll
      dataLength={dataRedux.length}
-     next={fetchMoreData}
-     hasMore={hasMore}
+     next={fetchMoreData1}
+     hasMore={more}
      loader={ 
       <div style={{ display: 'flex',justifyContent:"center" }}>
       <Box sx={{ display: 'flex',justifyContent:"center" }}>
@@ -164,7 +172,9 @@ const CardContainer = () => {
        return (
         <>
         <div style={{display: 'flex',flexDirection: 'column',alignItems:"center"}}>
+          <Suspense onfallback={<h3>Loading...</h3>}>
          <Cards key={index} index={index} ondislike={ondislike} userId={a.id} likes={element.likes} id={element._id} name={element.creatername} date={element.date} image={img}  heading={element.heading} caption={element.caption} onlike={onlike} displayLike={lik} isMyPosts={false}></Cards>
+         </Suspense>
         </div>
         </>
       )

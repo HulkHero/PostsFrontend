@@ -3,7 +3,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const dataSlice = createSlice({
     name: "data",
-    initialState: { value: {} },
+    initialState: { value: {}, fetchMore: true },
     reducers: {
         addData: (state, action) => {
             state.value = action.payload
@@ -22,11 +22,14 @@ const dataSlice = createSlice({
             state.value[action.payload.key].likes = state.value[action.payload.key].likes.filter((val) => {
                 return val != action.payload.userid
             })
+        },
+        fetchMoreData: (state, action) => {
+            state.fetchMore = false
         }
     }
 })
 
-export const { addData, removeData, concatData, like, dislike } = dataSlice.actions;
+export const { addData, removeData, concatData, like, dislike, fetchMoreData } = dataSlice.actions;
 
 export const store = configureStore({
     reducer: {

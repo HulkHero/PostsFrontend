@@ -194,7 +194,7 @@ function scrollFunction() {
         <Tab sx={{'& .MuiSvgIcon-root':{
           fontSize:"xx large",
         },
-        color:"#FFFFFF"}} icon={line===0? <Tooltip title="Home"><HomeIcon/></Tooltip> :< Tooltip title="Home"><HomeOutlinedIcon/></Tooltip>} to="/posts" component={Link}  >
+        color:"#FFFFFF"}} icon={line===0? <Tooltip title="Home"><HomeIcon/></Tooltip> :< Tooltip title="Home"><HomeOutlinedIcon/></Tooltip>} to="/posts" preventScrollReset={true} component={Link}  >
         
           
        
@@ -208,7 +208,7 @@ function scrollFunction() {
         <Tab  sx={{'& .MuiSvgIcon-root':{
           fontSize:"xx large",
         },
-        color:"#FFFFFF"}} icon={line===2? <Tooltip title="Profile"><PersonIcon/></Tooltip>:<Tooltip title="Profile"><PersonOutlineOutlinedIcon></PersonOutlineOutlinedIcon></Tooltip>} to="/myPosts" component={Link}  >
+        color:"#FFFFFF"}} icon={line===2? <Tooltip title="Profile"><PersonIcon/></Tooltip>:<Tooltip title="Profile"><PersonOutlineOutlinedIcon></PersonOutlineOutlinedIcon></Tooltip>} to="/myPosts"  preventScrollReset={true}  component={Link}  >
         </Tab>
         <Tab sx={{'& .MuiSvgIcon-root':{
           fontSize:"xx large",
