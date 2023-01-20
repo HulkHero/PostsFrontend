@@ -8,8 +8,8 @@ const FriendsHome = () => {
     <>
     <Container>
     <Grid container >
-        <Grid item xs={6} ><AddFriends></AddFriends></Grid>
-        <Grid item xs={6}><RecievedFriends></RecievedFriends></Grid>
+        <Grid item xs={12} md={6} sx={{justifyContent:"center"}} ><AddFriends></AddFriends></Grid>
+        <Grid item xs={12} md={6} sx={{justifyContent:"center"}}><RecievedFriends></RecievedFriends></Grid>
     </Grid>
     </Container>
     </>
