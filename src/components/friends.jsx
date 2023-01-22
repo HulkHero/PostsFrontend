@@ -16,16 +16,20 @@ export default function AlignItemsList() {
 
   const a = useContext(NoteContext)
     const [data, setData] = useState([]);
-    const [avatar, setAvatar] = useState();
+    
     useEffect(() => {
       if(a.id){
-    Axios.get(`https://nice-plum-panda-tam.cyclic.app/showFriends/${a.id}`).then((res) => {
-      console.log(res,"hellllll");
-      setAvatar(res.data.img)
-      console.log(res.data.img,"her")
-     setData(res.data.user.friends);
-    }) } 
-    
+    // Axios.get(`https://nice-plum-panda-tam.cyclic.app/showFriends/${a.id}`).then((res) => {
+    //   console.log(res,"hellllll");
+    //   setAvatar(res.data.img)
+    //   console.log(res.data.img,"her")
+    //  setData(res.data.user.friends);
+    // }) } 
+    Axios.get( `https://nice-plum-panda-tam.cyclic.app/myFriends/${a.id}`).then((res) => {
+      console.log("resFriends",res.data)
+      setData(res.data)}
+      )
+      }
     }, [])
     
 
@@ -41,16 +45,16 @@ export default function AlignItemsList() {
     </ListItem>
     <Divider variant='middle '></Divider>
     {data.length>0 ? data.map((element,index)=>{
-          let img12= avatar[index]
-          console.log(img12,"img12")
-          const base64= btoa(new Uint8Array(img12.avatar.data.data).reduce(function (data, byte) {
+          // let img12= avatar[index]
+          // console.log(img12,"img12")
+          const base64= btoa(new Uint8Array(element.avatar.data.data).reduce(function (data, byte) {
             return data + String.fromCharCode(byte);
         }, ''));
          
         const img=`data:image/png;base64,${base64}`
      return(
       <>
-       <FriendItem props={element} img={img} id={a.id} ></FriendItem>
+       <FriendItem  props={element} img={img} id={a.id} ></FriendItem>
      </>)
     })
     :<Typography sx={{ml:"20px"}}>No Friends to show</Typography>
