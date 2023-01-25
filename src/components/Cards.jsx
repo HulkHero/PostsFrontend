@@ -1,5 +1,5 @@
 import React,{memo} from 'react'
-import { Card,CardHeader,Avatar,CardMedia,CardContent,Typography,CardActions,IconButton, Container, CardActionArea,Modal,Backdrop,Box,Fade } from '@mui/material';
+import { Card,CardHeader,Avatar,CardMedia,CardContent,Typography,CardActions,IconButton, Container, CardActionArea,Modal,Backdrop,Box,Fade,styled } from '@mui/material';
 import {red} from"@mui/material/colors";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -10,7 +10,7 @@ import { useContext } from 'react';
 import NoteContext from '../context/noteContext';
 import {useState,useEffect} from "react"
 
-
+import "./fri.css"
 const style = {
   position: 'absolute',
   top: '50%',
@@ -23,12 +23,37 @@ const style = {
   p: 4,
 };
 
+const LikeIcon=styled(FavoriteIcon)(({ theme })=>({
+ color:'#ab0909',
+//  animationName: "arrow",
+//  animationDuration:"3.7s",
+//  animationIterationCount: "1",
+
+//  "@keyframes arrow":{
+//   "0%": {
+//     transform: "scale(1)",
+   
+//   },
+//   "20%": {
+//     transform: "scale(1.5)",
+
+//   },
+//   "100%": {
+//     transform: "scale(1)",
+   
+//   },
+
+//  }
+}
+))
+
 const Cards = (props) => {  
   const a= useContext(NoteContext)
     console.log("a.id",a.id)
   const [like, setLike] = useState(false)
   const [modal, setModal] = useState(false)
   const [num, setnum] = useState(props.likes.length)
+  const [animate, setAnimate] = useState(false)
  // const base64= btoa(String.fromCharCode(...new Uint8Array(props.image)));
   var date = new Date(props.date);
   var options = {
@@ -112,14 +137,16 @@ var result = date.toLocaleDateString('en', options);
         </Typography>
       </CardContent>
       <CardActions >
-        <IconButton onClick={()=>{ if(like==true){props.ondislike(props.id);setnum(props.likes.length--);
+        <IconButton disableRipple={true} onClick={()=>{ if(like==true){props.ondislike(props.id);setnum(props.likes.length--);
         setLike(false)
+        setAnimate(false)
        }else{
           props.onlike(props.id);
           setLike(true)
+          setAnimate(true)
           setnum(props.likes.length++)
         }}} >
-         {  like==true? <FavoriteIcon sx={{color:'#ab0909'}} />  :<FavoriteBorderIcon></FavoriteBorderIcon>    
+         {  like==true? <LikeIcon className={animate==true?"likeIconAnimation":" "}  />  :<FavoriteBorderIcon></FavoriteBorderIcon>    
          }
         </IconButton>
         <Typography variant="body1" color="text.primary" sx={{alignSelf:"center"}}>{props.displayLikes? props.displayLikes :props.likes.length}</Typography>

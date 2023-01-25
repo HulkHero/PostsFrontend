@@ -19,3 +19,21 @@
 
 }
 
+@keyframes likeButton {  
+  0% {
+    transform:scale(1);
+  }
+  20% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.likeIconAnimation {
+
+  animation-name: likeButton;
+  animation-duration:3s ;
+     
+}
+
