@@ -21,6 +21,19 @@ import InputBase from '@mui/material/InputBase';
 import "./nav.css"
 import SearchIcon from '@mui/icons-material/Search';
 import NoteContext from '../context/noteContext'
+
+const Head=styled("Box")(({theme})=>({
+ // position:"relative",
+  //height:"auto",
+  opacity:1,
+  display:"flex",
+  justifyContent:"center",
+  flexFlow:"row-reverse",
+  //top:"0px",
+  transition:"height 0.5s"
+  
+
+}))
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius:"50px",
@@ -111,10 +124,10 @@ function scrollFunction() {
   if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
     
     document.getElementById("ns").style.height = "0px";
-    document.getElementById("ns").style.opacity = "0";
+     document.getElementById("ns").style.opacity = "0";
   } else {
     document.getElementById("ns").style.height = "auto";
-    document.getElementById("ns").style.opacity = "1";
+     document.getElementById("ns").style.opacity = "1";
   }
 }
   const [drawer, setDrawer] = React.useState(false)
@@ -232,7 +245,7 @@ function scrollFunction() {
     <AppBar position="fixed" sx={{display:{xs:'block',sm:"none"},marginBottom:"2rem",mb:"50px"}}>
 
     <Box sx={{display:{xs:"block",sm:"none",minHeight:"50px"}}}>
-      <div id="ns"  class="ns" style={{position:"relative",display:"flex",justifyContent:"center",flexFlow:"row-reverse"}}>
+      <Head id="ns"  class="ns">
               
           <Button onClick={()=>{setDrawer(!drawer)}} sx={{ display:"inline-block",ml:"auto", color:"#fff",width:"50px" }} ><MenuRoundedIcon></MenuRoundedIcon></Button>
               <div style={{display:"block",marginLeft:"10px",marginRight:"auto"}}>
@@ -255,7 +268,7 @@ function scrollFunction() {
             {"<Hulk>"}
           </Typography>
           </div>
-          </div>
+          </Head>
       <Toolbar sx={{display:"flex",justifyContent:"center",minHeight:"50px"}}>
               <Tabs textColor="secondary" fontSize="small"   sx={{
           marginLeft:"auto",

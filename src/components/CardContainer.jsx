@@ -143,11 +143,19 @@ const CardContainer = () => {
             return data + String.fromCharCode(byte);
         }, ''));
        
-        const img=`data:image/png;base64,${base64}`
+        const img=`data:image/png;base64,${base64}`;
+
+        const base641= btoa(new Uint8Array(element.creater.profile.avatar.data.data).reduce(function (data, byte) {
+          return data + String.fromCharCode(byte);
+      }, ''));
+     
+      const imgAvatar=`data:image/png;base64,${base641}`
+
+
        return (
         <>
         <div style={{display: 'flex',flexDirection: 'column',alignItems:"center"}}>
-         <Cards key={element._id} ondislike={ondislike} userId={a.id} likes={element.likes} id={element._id} name={element.creatername} date={element.date} image={img}  heading={element.heading} caption={element.caption} onlike={onlike} displayLike={lik} isMyPosts={false}></Cards>
+         <Cards key={element._id} imgAvatar={imgAvatar} ondislike={ondislike} userId={a.id} likes={element.likes} id={element._id} name={element.creatername} date={element.date} image={img}  heading={element.heading} caption={element.caption} onlike={onlike} displayLike={lik} isMyPosts={false}></Cards>
         </div>
         </>
       )
