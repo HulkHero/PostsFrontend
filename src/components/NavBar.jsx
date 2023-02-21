@@ -237,7 +237,8 @@ function scrollFunction() {
         </Tab>
         </Tabs>
        
-    <Button  sx={{ml:'auto',color:"#FFFFFF"}}><Link to="/" style={{textDecoration:"none",color:"#FFFFFF"}} >Login </Link> </Button>
+    <Button sx={{ml:'auto',textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}} minWidth href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button>
+    <Button  sx={{color:"#FFFFFF"}}><Link to="/" style={{textDecoration:"none",color:"#FFFFFF"}} >Login </Link> </Button>
               </Toolbar>
 
     </Box>
@@ -329,6 +330,7 @@ function scrollFunction() {
                <Link style={{textDecoration:'none'}}  to="/addposts"> <Button onClick={()=>setDrawer(false)}  sx={{ color:"#fff" }}>Add Post</Button></Link>
                <Link style={{textDecoration:'none'}}  to="/addFriends"> <Button onClick={()=>setDrawer(false)}  sx={{ color:"#fff" }}>Add Friends</Button></Link>
 
+            <Button sx={{textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}} minWidth href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button>
             </Grid>
             
           </Drawer>
