@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { IconButton, ListItemButton, ListItemIcon,Icon, TextField, Button,Box } from '@mui/material';
+import { IconButton, ListItemButton, ListItemIcon,Icon, TextField, Button,Box ,Snackbar} from '@mui/material';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import NoteContext from "../context/noteContext"
 
@@ -18,6 +18,7 @@ const AddFriends = () => {
    const a= useContext(NoteContext);
 
     const [Data, setData] = useState([])
+    const [openSnack, setopenSnack] = useState(false)
   //  useEffect(() => {
   //    Axios.get("http://localhost:5000/addFriends").then(response => {
 
@@ -29,7 +30,7 @@ const AddFriends = () => {
 
    const SendRekuest= async(targetId)=>{
       await Axios.post("https://nice-plum-panda-tam.cyclic.app/sendRekuest",{senderId: a.id, targetId: targetId}).then(response => {
-         
+         setopenSnack(true)
        })
 
    }
@@ -94,7 +95,15 @@ console.log("data",Data)
 
         })
 
+
     }
+     <Snackbar
+        anchorOrigin={{vertical:"top", horizontal: "center" }}
+        open={openSnack}
+        onClose={()=>{setopenSnack(false)}}
+        message="Rekuest sent successfully"
+       // key={vertical + horizontal}
+      />
  
       
     </List>
