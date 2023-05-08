@@ -130,7 +130,7 @@ const AddPosts = () => {
     console.log(key[0] + ', ' + key[1])
   }
   if(a.token){
-    Axios.post("http://localhost:5000/addStory",formData,{headers:{'content-type': 'multipart/form-data'}}).then((response)=>{
+    Axios.post("https://nice-plum-panda-tam.cyclic.app/addStory",formData,{headers:{'content-type': 'multipart/form-data'}}).then((response)=>{
       console.log(response)
       setOpenSnack(true)   
      })

@@ -95,11 +95,18 @@ const MyPosts = () => {
       <Paper evaluation={2} style={{ minWidth: "100%", display: "flex:", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100%", backgroundColor: "whitesmoke" }} spacing={2}>
 
         {data.length > 0 ? data.map((element) => {
-          const base64 = btoa(new Uint8Array(element.image.data.data).reduce(function (data, byte) {
-            return data + String.fromCharCode(byte);
-          }, ''));
-
-          const img = `data:image/png;base64,${base64}`
+          let base64 = null;
+          let img = null;
+          if (element.image.data) {
+            base64 = btoa(
+              new Uint8Array(element.image.data.data).reduce(function (data, byte) {
+                return data + String.fromCharCode(byte);
+              }, '')
+            );
+            img = `data:image/png;base64,${base64}`;
+          } else {
+            console.log('no image');
+          }
           return (
             <>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: "center" }}>

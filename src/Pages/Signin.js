@@ -91,7 +91,7 @@ export default function SignIn() {
 
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Button onClick={() => setOpen(true)}>Open</Button>
+      {/* <Button onClick={() => setOpen(true)}>Open</Button>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -106,7 +106,7 @@ export default function SignIn() {
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography>
         </Box>
-      </Modal>
+      </Modal> */}
 
       <Button onClick={() => setSignup(!show)}><Link sx={{ textDecoration: 'none' }} to='/signup'>Signup</Link></Button>
       {show == true ? <Outlet></Outlet> : " "}
