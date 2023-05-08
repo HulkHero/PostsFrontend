@@ -124,13 +124,13 @@ const AddPosts = () => {
   formData.append("caption",user.caption)
   formData.append("id",user._id)
   formData.append("creatername",user.creatername)
-  formData.append("image",file);
+  file?formData.append("image",file):console.log("no image");
   console.log(formData)
   for (var key of formData.entries()) {
     console.log(key[0] + ', ' + key[1])
   }
   if(a.token){
-    Axios.post("https://nice-plum-panda-tam.cyclic.app/addStory",formData,{headers:{'content-type': 'multipart/form-data'}}).then((response)=>{
+    Axios.post("http://localhost:5000/addStory",formData,{headers:{'content-type': 'multipart/form-data'}}).then((response)=>{
       console.log(response)
       setOpenSnack(true)   
      })

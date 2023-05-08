@@ -139,11 +139,20 @@ const CardContainer = () => {
     }
     >      
     { data.map((element)=>{
-           const base64= btoa(new Uint8Array(element.image.data.data).reduce(function (data, byte) {
-            return data + String.fromCharCode(byte);
-        }, ''));
+       let base64 = null;
+       let img=null;
+       if (element.image.data) {
+         base64 = btoa(
+           new Uint8Array(element.image.data.data).reduce(function (data, byte) {
+             return data + String.fromCharCode(byte);
+           }, '')
+         );
+        img=`data:image/png;base64,${base64}`;
+       } else {
+         console.log('no image');
+       }
+
        
-        const img=`data:image/png;base64,${base64}`;
 
         const base641= btoa(new Uint8Array(element.creater.profile.avatar.data.data).reduce(function (data, byte) {
           return data + String.fromCharCode(byte);

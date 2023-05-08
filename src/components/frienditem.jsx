@@ -38,7 +38,7 @@ const FriendItem = (props) => {
         }}}
       >
       </ListItemText>
-       {show? <div style={{position:"absolute",minWidth:"150px",zIndex:"10000",backgroundColor:"white",marginLeft:"10px",padding:"10px",borderRadius:"10px",boxShadow:"0px 0px 10px 1px #0097a7"}} >Status: {props.props.Status}</div>
+       {show? <div style={{position:"absolute",minWidth:"150px",zIndex:"1000000",backgroundColor:"white",marginLeft:"10px",padding:"10px",borderRadius:"10px",boxShadow:"0px 0px 10px 1px #0097a7"}} >Status: {props.props.Status}</div>
        :" "
   }
   </div>

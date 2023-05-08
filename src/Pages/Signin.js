@@ -4,8 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import { Link } from "react-router-dom"
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -22,8 +20,7 @@ import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '@mui/system';
-// const theme = createTheme();
-import { green } from '@mui/material/colors';
+
 function setSessionToken(userToken, id, names) {
   sessionStorage.setItem('token', userToken);
   sessionStorage.setItem('id', id);
@@ -152,10 +149,6 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
           />
           <Box sx={{ m: 1, position: 'relative' }}>
             <Button

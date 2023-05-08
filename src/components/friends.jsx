@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
+import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Axios from "axios";
 import NoteContext from "../context/noteContext";
@@ -30,13 +31,13 @@ export default function AlignItemsList() {
       setData(res.data)}
       )
       }
-    }, [])
+    }, [a.id])
     
 
   return (
     <> 
-
-    <List sx={{ width: '100%', maxWidth: 360, backgroundColor:"#f0f2f5",ml:"2%" }}>
+    <Card style={{minWidth:"100%",zIndex:"10000",minHeight:"100vh"}}>
+    <List sx={{ width: '100%',minWidth:"100%",ml:"2%",mr:"2%" }}>
      <ListItem> <div>
         <Typography component="h6" variant='h6' >
             Friends
@@ -60,6 +61,7 @@ export default function AlignItemsList() {
     :<Typography sx={{ml:"20px"}}>No Friends to show</Typography>
     }
     </List>
+    </Card>
     
     </>
   );

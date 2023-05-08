@@ -120,7 +120,7 @@ var result = date.toLocaleDateString('en', options);
           </Box>
         </Fade>
       </Modal>
-        <CardActionArea   onClick={()=>{setModal(true);console.log("open")}}>
+        {props.image?<CardActionArea   onClick={()=>{setModal(true);console.log("open")}}>
       <Container sx={{display: "flex", justifyContent:"center"}}>
       <CardMedia
         component="img"
@@ -130,7 +130,7 @@ var result = date.toLocaleDateString('en', options);
       
       />
       </Container>
-      </CardActionArea>
+      </CardActionArea>:""}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
          {props.caption}
