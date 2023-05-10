@@ -30,10 +30,13 @@ function App() {
     if (a.token) {
       setIslogged(true);
     }
+    else {
+      setIslogged(false)
+    }
 
 
 
-  },)
+  }, [a])
 
 
 

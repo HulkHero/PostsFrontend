@@ -238,8 +238,8 @@ function scrollFunction() {
         </Tabs>
        
     <Button sx={{ml:'auto',textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}} minWidth href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button>
-    <Button sx={{display:"none",textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
-    <Button  sx={{color:"#FFFFFF"}}><Link to="/" style={{textDecoration:"none",color:"#FFFFFF"}} >Login </Link> </Button>
+    <Button sx={{display:"inline-block",textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
+    <Button  sx={{color:"#FFFFFF"}} ><Link onClick={()=>{console.log("clicked logout"); a.logout()}} to="/" style={{textDecoration:"none",color:"#FFFFFF"}} >{a.loginText} </Link> </Button>
               </Toolbar>
 
     </Box>
@@ -284,10 +284,7 @@ function scrollFunction() {
         <Tab sx={{'& .MuiSvgIcon-root':{
           fontSize:"xx large",
         },
-        color:"#FFFFFF"}} icon={line===0? <Tooltip title="Home"><HomeIcon/></Tooltip> :< Tooltip title="Home"><HomeOutlinedIcon/></Tooltip>} to="/posts" component={Link}  >
-        
-          
-       
+        color:"#FFFFFF"}} icon={line===0? <Tooltip title="Home"><HomeIcon/></Tooltip> :< Tooltip title="Home"><HomeOutlinedIcon/></Tooltip>} to="/posts" component={Link}  >  
         </Tab>
         <Tab sx={{'& .MuiSvgIcon-root':{
           fontSize:"xx large",
@@ -322,8 +319,8 @@ function scrollFunction() {
             onOpen={()=>(setDrawer(true))}
           >
             <Grid container  sx={{Width:"50%",height:"100%", Display:"flex",flexDirection:"column", backgroundColor:"primary.main"}} >
-            <Link to="/" style={{textDecoration:"none",textColor:"#FFFFFF",color:"#FFFFFF",minWidth:"50%"}}><Button  sx={{textColor:"#FFFFFF",color:"#FFFFFF"}}>
-              Login
+            <Link to="/" onClick={()=>{a.logout()}} style={{textDecoration:"none",textColor:"#FFFFFF",color:"#FFFFFF",minWidth:"50%"}}><Button  sx={{textColor:"#FFFFFF",color:"#FFFFFF"}}>
+              {a.loginText}
             </Button>
             </Link>
                <Link  style={{textDecoration:'none'}}   to="/posts"> <Button onClick={()=>setDrawer(false)} sx={{ color:"#fff" }}>Posts</Button></Link>
@@ -332,7 +329,7 @@ function scrollFunction() {
                <Link style={{textDecoration:'none'}}  to="/addFriends"> <Button onClick={()=>setDrawer(false)}  sx={{ color:"#fff" }}>Add Friends</Button></Link>
 
             <Button sx={{textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}} minWidth href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button>
-            <Button sx={{display:"none",textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
+            <Button sx={{textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
             </Grid>
             
           </Drawer>

@@ -56,6 +56,7 @@ export default function SignIn() {
 
       setSessionToken(response.data.token, response.data.userId, response.data.name)
       setLoading(false)
+      a.setLoginText("logout")
       Navigate("/posts")
 
     }).catch((error) => { console.log(error); setLoading(false); setOpenSnack(true) });
@@ -82,6 +83,7 @@ export default function SignIn() {
 
       setSessionToken(response.data.token, response.data.userId, response.data.name)
       setLoading(false)
+      a.setLoginText("logout")
       Navigate("/posts")
 
     }).catch((error) => { console.log(error); setLoading(false); setOpenSnack(true) });
@@ -108,7 +110,7 @@ export default function SignIn() {
         </Box>
       </Modal> */}
 
-      <Button onClick={() => setSignup(!show)}><Link sx={{ textDecoration: 'none' }} to='/signup'>Signup</Link></Button>
+
       {show == true ? <Outlet></Outlet> : " "}
       <Box
         sx={{
@@ -150,6 +152,7 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
+          <Link onClick={() => setSignup(!show)} sx={{ textDecoration: 'none !important', textDecorationLine: "none" }} to='/signup'>Signup</Link>
           <Box sx={{ m: 1, position: 'relative' }}>
             <Button
               type="submit"
