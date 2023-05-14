@@ -134,8 +134,6 @@ const AddPosts = () => {
       console.log(response)
       setOpenSnack(true)   
      })
-
-
   }
   else{
     console.log("login first")

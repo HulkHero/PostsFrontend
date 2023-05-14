@@ -30,7 +30,7 @@ const FriendItem = (props) => {
         </Avatar>
       </ListItemAvatar>
       <div >
-      <ListItemText onMouseOver={()=>setShow(true)} onMouseOut={()=>setShow(false)}
+      <ListItemText onMouseOver={()=>setShow(true)} onTouchStart={()=>setShow(true)}  onTouchEnd={()=>setShow(false)} onTouchMove={()=>setShow(false)} onMouseOut={()=>setShow(false)}
         primary={props.props.createrId.name}
         sx={{":hover":{
             cursor:"pointer",

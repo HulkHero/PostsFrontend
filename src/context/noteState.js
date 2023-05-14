@@ -9,6 +9,8 @@ const NoteState = (props) => {
     const [creatername, setcreatername] = useState("")
     const [loginText, setLoginText] = useState("login")
 
+    
+
     console.log("inside context")
 
     const logout = () => {

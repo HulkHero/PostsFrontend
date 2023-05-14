@@ -118,7 +118,7 @@ const CardContainer = () => {
   return (
     <>
    {
-    <Paper evaluation={0} sx={{minWidth: "100%",display:"flex:",flexDirection:"column",alignItems:"center",border:"0px",boxShadow:"none",justifyContent:"center",minHeight:"100%",backgroundColor:"#f0f2f5"}} spacing={2}>
+    <Paper evaluation={0} sx={{minWidth:"100%",display:"flex:",flexDirection:"column",alignItems:"center",border:"0px",boxShadow:"none",justifyContent:"center",minHeight:"100%",backgroundColor:"#f0f2f5"}} spacing={2}>
     { data.length > 0 ? 
     <InfiniteScroll
      dataLength={data.length}

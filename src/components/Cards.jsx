@@ -126,7 +126,7 @@ var result = date.toLocaleDateString('en', options);
         component="img"
         image={props.image}
         alt="Paella dish"
-        sx={{maxHeight:"300px",maxWidth:"400px",mt:2,position:"center",justifyContent:"center",objectFit:"scale-down"}}
+        sx={{maxHeight:"300px",maxWidth:"400px",position:"center",justifyContent:"center",objectFit:"scale-down"}}
       
       />
       </Container>

@@ -48,10 +48,10 @@ const RecievedFriends = () => {
   return (
     <> 
 
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' ,marginLeft:"auto",marginRight:"auto"}}>
+    <List sx={{ width: '100%', maxWidth: 360 ,marginLeft:"auto",marginRight:"auto"}}>
      <ListItem> <div>
-        <Typography component="h5" variant='h5' >
-        Requests
+        <Typography component="h6" variant='h6' >
+        Received Requests
         </Typography>
     </div>
     </ListItem>
