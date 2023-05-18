@@ -9,7 +9,7 @@ const NoteState = (props) => {
     const [creatername, setcreatername] = useState("")
     const [loginText, setLoginText] = useState("login")
 
-    
+    const [avatar, setAvatar] = useState(null)
 
     console.log("inside context")
 
@@ -32,11 +32,12 @@ const NoteState = (props) => {
         setId("")
         setcreatername("")
         setLoginText("login")
+        setAvatar(null)
     }
 
 
     return (
-        <NoteContext.Provider value={{ token, setToken, id, setId, creatername, setcreatername, loginText, setLoginText, logout }}>
+        <NoteContext.Provider value={{ avatar, setAvatar, token, setToken, id, setId, creatername, setcreatername, loginText, setLoginText, logout }}>
             {props.children}
         </NoteContext.Provider>
     )

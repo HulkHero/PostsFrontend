@@ -23,6 +23,8 @@ function App() {
     a.setId(id)
     const name = await sessionStorage.getItem("creatername");
     a.setcreatername(name)
+    const avatar = await sessionStorage.getItem("avatar");
+    a.setAvatar(avatar);
     console.log("getting Data from storage")
   }
   useEffect(() => {

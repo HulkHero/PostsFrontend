@@ -1,5 +1,5 @@
 import React,{useContext} from 'react'
-import {AppBar,Tabs,Tab,Box,Drawer,Grid,Typography, Tooltip} from '@mui/material'
+import {AppBar,Tabs,Tab,Box,Drawer,Grid,Typography, Tooltip,Avatar,Menu,MenuItem,ListItemIcon, ListItemButton} from '@mui/material'
 import {Link} from 'react-router-dom'
 import Toolbar from '@mui/material/Toolbar';
 import { styled, alpha } from '@mui/material/styles';
@@ -21,7 +21,7 @@ import InputBase from '@mui/material/InputBase';
 import "./nav.css"
 import SearchIcon from '@mui/icons-material/Search';
 import NoteContext from '../context/noteContext'
-
+import Logout from "@mui/icons-material/Logout"
 const Head=styled("Box")(({theme})=>({
  // position:"relative",
   //height:"auto",
@@ -109,17 +109,21 @@ const NavBar = () => {
    
       const getid=sessionStorage.getItem("id");
       const getcreatername=sessionStorage.getItem("creatername");
+      const avatar=sessionStorage.getItem("avatar");
     if(getToken!==null){
       a.setToken(getToken)
       a.setId(getid)
       a.setcreatername(getcreatername)
+      a.setavatar(avatar);
     }
   }
 
+
   window.onscroll = function() {scrollFunction()};
+  console.log("a.avatar",a.avatar)
   
-    
- 
+
+  
 function scrollFunction() {
   if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
     
@@ -131,7 +135,15 @@ function scrollFunction() {
   }
 }
   const [drawer, setDrawer] = React.useState(false)
-    const [line, setLine] = useState(0)
+    const [line, setLine] = useState(0);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
   return (
     
      <Box sx={{marginBottom:{xs:"6rem",sm:"3rem"}}}>
@@ -239,7 +251,29 @@ function scrollFunction() {
        
     <Button sx={{ml:'auto',textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}} minWidth href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button>
     <Button sx={{display:"inline-block",textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
-    <Button  sx={{color:"#FFFFFF"}} ><Link onClick={()=>{console.log("clicked logout"); a.logout()}} to="/" style={{textDecoration:"none",color:"#FFFFFF"}} >{a.loginText} </Link> </Button>
+    <IconButton onClick={handleClick} size={"small"}>
+      
+     
+       <Avatar  alt="H" src={a.avatar}> </Avatar></IconButton>
+    <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+         <div onClick={handleClose}>
+          <ListItemButton sx={{minWidth:"30px"}} component={Link} onClick={()=>{a.logout()}} to="/">
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout</ListItemButton>
+        </div>
+        {/* <MenuItem onClick={handleClose}><Link onClick={()=>{console.log("clicked logout"); a.logout()}} to="/" style={{textDecoration:"none"}} >Logout</Link></MenuItem> */}
+      </Menu>
+
               </Toolbar>
 
     </Box>

@@ -21,10 +21,11 @@ import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '@mui/system';
 
-function setSessionToken(userToken, id, names) {
+function setSessionToken(userToken, id, names, avatar) {
   sessionStorage.setItem('token', userToken);
   sessionStorage.setItem('id', id);
   sessionStorage.setItem('creatername', names);
+  sessionStorage.setItem('avatar', avatar);
   console.log("storage")
 }
 
@@ -53,8 +54,17 @@ export default function SignIn() {
       a.setId(response.data.userId)
       console.log(response.token)
       a.setcreatername(response.data.name)
+      const ava = response.data.avatar.avatar;
+      const base64 = btoa(
+        new Uint8Array(ava.data.data).reduce(function (data, byte) {
+          return data + String.fromCharCode(byte);
+        }, '')
+      );
+      const img = `data:image/png;base64,${base64}`;
 
-      setSessionToken(response.data.token, response.data.userId, response.data.name)
+      a.setAvatar(img)
+      setSessionToken(response.data.token, response.data.userId, response.data.name, img)
+
       setLoading(false)
       a.setLoginText("logout")
       Navigate("/posts")
@@ -73,15 +83,21 @@ export default function SignIn() {
       password: "hammad"
 
     }).then((response) => {
-      console.log(response)
-      console.log(response.data.token)
-      console.log("id ", response.data.userId)
+
       a.setToken(response.token)
       a.setId(response.data.userId)
-      console.log(response.token)
-      a.setcreatername(response.data.name)
 
-      setSessionToken(response.data.token, response.data.userId, response.data.name)
+      a.setcreatername(response.data.name)
+      const ava = response.data.avatar.avatar;
+      const base64 = btoa(
+        new Uint8Array(ava.data.data).reduce(function (data, byte) {
+          return data + String.fromCharCode(byte);
+        }, '')
+      );
+      const img = `data:image/png;base64,${base64}`;
+
+      a.setAvatar(img)
+      setSessionToken(response.data.token, response.data.userId, response.data.name, img)
       setLoading(false)
       a.setLoginText("logout")
       Navigate("/posts")

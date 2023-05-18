@@ -65,9 +65,12 @@ const MyProfile = () => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
+      sessionStorage.setItem("avatar",fileReader.result)
+      a.setAvatar(fileReader.result)
       console.log("filereade")
     };
     fileReader.readAsDataURL(file);
+
   }, [file]);
 
 useEffect( ()=>{
@@ -127,7 +130,9 @@ useEffect( ()=>{
       console.log("sent")
       Axios.post("https://nice-plum-panda-tam.cyclic.app/avatar",formData,{headers:{'content-type': 'multipart/form-data'}}).then((response)=>{
         console.log(response)
-        setOpenSnack(true)   
+       
+        setOpenSnack(true)
+
        })
   
   
@@ -170,7 +175,7 @@ useEffect( ()=>{
       />
     <div style={{display:"flex",position:"relative", maxWidth:"200px",maxHeight:"200px",}}>
          {        
-         previewUrl? <img src={previewUrl} style={{dispaly:"block",maxWidth:"200px",maxHeight:"200px",minWidth:"200px",minHeight:"200px", borderRadius:"100px",borderColor:"#cde8cc",border:"2px solid #cde8cc",boxShadow:"1px 1px 5px 5px #cde8cc",objectFit:"cover"}} alt={"Image Not Found"} />:<img src={DefaultImg} style={{maxWidth:"200px",maxHeight:"200px",borderRadius:"100px",borderColor:"#cde8cc",border:"2px solid #cde8cc",boxShadow:"1px 1px 5px 5px #cde8cc"}} alt={"not found"}></img>
+         previewUrl? <img src={previewUrl} style={{dispaly:"block",maxWidth:"200px",maxHeight:"200px",minWidth:"200px",minHeight:"200px", borderRadius:"100px",borderColor:"#cde8cc",border:"2px solid #cde8cc",boxShadow:"1px 1px 5px 5px #cde8cc",objectFit:"cover"}} alt={"Image Not Found"} />:<img src={a.avatar} style={{maxWidth:"200px",maxHeight:"200px",borderRadius:"100px",borderColor:"#cde8cc",border:"2px solid #cde8cc",boxShadow:"1px 1px 5px 5px #cde8cc"}} alt={"not found"}></img>
 }
          <div style={{position:"absolute",bottom:"0.5rem",marginLeft:"auto",boxShadow:"1px 1px 5px 3px #cde8cc",borderRadius:"50px"}}>
            <IconButton color="primary" onClick={pickImageHandler}>
