@@ -47,14 +47,13 @@ export default function SignIn() {
       password: data.get('password')
 
     }).then((response) => {
-      console.log(response)
-      console.log(response.data.token)
+
       console.log("id ", response.data.userId)
       a.setToken(response.token)
       a.setId(response.data.userId)
       console.log(response.token)
       a.setcreatername(response.data.name)
-      const ava = response.data.avatar.avatar;
+      const ava = response.data.avatar;
       const base64 = btoa(
         new Uint8Array(ava.data.data).reduce(function (data, byte) {
           return data + String.fromCharCode(byte);
@@ -88,7 +87,7 @@ export default function SignIn() {
       a.setId(response.data.userId)
 
       a.setcreatername(response.data.name)
-      const ava = response.data.avatar.avatar;
+      const ava = response.data.avatar;
       const base64 = btoa(
         new Uint8Array(ava.data.data).reduce(function (data, byte) {
           return data + String.fromCharCode(byte);
