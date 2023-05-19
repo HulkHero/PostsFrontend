@@ -108,24 +108,6 @@ export default function SignIn() {
 
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      {/* <Button onClick={() => setOpen(true)}>Open</Button>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box position="absolute" top="40%" left="40%" backgroundColor="blue" padding="10px">
-          <Typography id="modal-modal-title" variant="h6" color="white" component="h2">
-            Logged in
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </Modal> */}
-
-
       {show == true ? <Outlet></Outlet> : " "}
       <Box
         sx={{

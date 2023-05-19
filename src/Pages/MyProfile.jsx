@@ -1,4 +1,4 @@
-import { IconButton,TextField,Grid,styled,Button } from '@mui/material'
+import { IconButton,TextField,Grid,styled,Button,Snackbar,Alert } from '@mui/material'
 import React from 'react'
 import DefaultImg from "./defaultProfileImg.jpg"
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
@@ -56,7 +56,7 @@ const MyProfile = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [data, setData] = useState();
   const [isValid, setIsValid] = useState(false);
-
+ let dumyImg;
   const filePickerRef = useRef();
   useEffect(() => {
     if (!file) {
@@ -66,7 +66,7 @@ const MyProfile = () => {
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
       sessionStorage.setItem("avatar",fileReader.result)
-      a.setAvatar(fileReader.result)
+      dumyImg=fileReader.result
       console.log("filereade")
     };
     fileReader.readAsDataURL(file);
@@ -130,9 +130,8 @@ useEffect( ()=>{
       console.log("sent")
       Axios.post("https://nice-plum-panda-tam.cyclic.app/avatar",formData,{headers:{'content-type': 'multipart/form-data'}}).then((response)=>{
         console.log(response)
-       
+       a.setAvatar(dumyImg)
         setOpenSnack(true)
-
        })
   
   
@@ -188,6 +187,11 @@ useEffect( ()=>{
     </Grid>
     <Grid item xs={12} style={{display:"flex",justifyContent:"center", marginTop:"20px"}}><CssTextField label={"Status"} onChange={(e)=>handleChange(e)} value={defaultText} name="status" ></CssTextField></Grid>
     <Grid item xs={12} sx={{display:"flex",flexDirection:"row",justifyContent:"center"}}><Button variant="contained" type="submit" sx={{alignSelf:"center",mt:"20px",width:"80%"}}>Update</Button></Grid>
+    <Snackbar open={openSnack} autoHideDuration={4000} onClose={() => setOpenSnack(false)}>
+          <Alert onClose={() => { setOpenSnack(false) }} severity="success" variant="filled" sx={{ width: '100%' }}>
+            Done
+          </Alert>
+        </Snackbar>
     </Grid>
     </form>
     </> 

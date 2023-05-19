@@ -1,5 +1,5 @@
 import React,{useContext} from 'react'
-import {AppBar,Tabs,Tab,Box,Drawer,Grid,Typography, Tooltip,Avatar,Menu,MenuItem,ListItemIcon, ListItemButton} from '@mui/material'
+import {AppBar,Tabs,Tab,Box,Drawer,Grid,Typography, Tooltip,Avatar,Menu,MenuItem,ListItemIcon, ListItemButton,SwipeableDrawer} from '@mui/material'
 import {Link} from 'react-router-dom'
 import Toolbar from '@mui/material/Toolbar';
 import { styled, alpha } from '@mui/material/styles';
@@ -170,43 +170,7 @@ function scrollFunction() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-        {/* <Tabs textColor="secondary" fontSize="small"   sx={{
-          marginLeft:"auto",
-          marginRight:"auto",
-  
-  }} indicatorColor="secondary" value={line} onChange={(e,value)=>{ setLine(value)}}>
-        <Tab value="one" sx={{'& .MuiSvgIcon-root':{
-          fontSize:"xx large",
-        },
-        color:"#FFFFFF"}} icon={line===0? <Tooltip title="Home"><HomeIcon/></Tooltip> :< Tooltip title="Home"><HomeOutlinedIcon/></Tooltip>} to="/posts" component={Link}  >
-        
-          
        
-        </Tab>
-        <Tab value="two" sx={{'& .MuiSvgIcon-root':{
-          fontSize:"xx large",
-        },
-        color:"#FFFFFF"}} icon={line===1? <Tooltip title="New Post"><PostAddIcon></PostAddIcon></Tooltip>: <Tooltip title="New Post"><PostAddOutlinedIcon></PostAddOutlinedIcon></Tooltip>} to="/addposts" component={Link} >
-        
-        </Tab>
-        <Tab value="three" sx={{'& .MuiSvgIcon-root':{
-          fontSize:"xx large",
-        },
-        color:"#FFFFFF"}} icon={line===2? <Tooltip title="Profile"><PersonIcon/></Tooltip>:<Tooltip title="Profile"><PersonOutlineOutlinedIcon></PersonOutlineOutlinedIcon></Tooltip>} to="/myPosts" component={Link}  >
-        </Tab>
-        <Tab value="four" sx={{'& .MuiSvgIcon-root':{
-          fontSize:"xx large",
-        },
-        //  "& :hover":{
-        //    backgroundColor:"#FFFFFF",
-        //  },
-        
-        color:"#FFFFFF"}}  icon={line===3? <Tooltip title="Add Friends"><PersonAddAlt1Icon/></Tooltip>:<Tooltip title="Add Friends"><PersonAddAltOutlinedIcon></PersonAddAltOutlinedIcon></Tooltip>}  component={Link} to="/addFriends" ><Button sx={{color:"#FFFFFF"}}>
-   
-          Add Friends
-        </Button>
-        </Tab>
-        </Tabs> */}
         <Tabs textColor="secondary" fontSize="small"   sx={{
           marginLeft:"auto",
           marginRight:"auto",
@@ -282,8 +246,27 @@ function scrollFunction() {
 
     <Box sx={{display:{xs:"block",sm:"none",minHeight:"50px"}}}>
       <Head id="ns"  class="ns">
-              
-          <Button onClick={()=>{setDrawer(!drawer)}} sx={{ display:"inline-block",ml:"auto", color:"#fff",width:"50px" }} ><MenuRoundedIcon></MenuRoundedIcon></Button>
+      <Button onClick={()=>{setDrawer(!drawer)}} sx={{ display:"inline-block",color:"#fff",width:"50px" }} ><MenuRoundedIcon></MenuRoundedIcon></Button>
+      <IconButton onClick={handleClick} size={"small"}>
+      <Avatar  alt="H" src={a.avatar}> </Avatar></IconButton>
+   <Menu
+       id="basic-menu"
+       anchorEl={anchorEl}
+       open={open}
+       onClose={handleClose}
+       MenuListProps={{
+         'aria-labelledby': 'basic-button',
+       }}
+     >
+        <div onClick={handleClose}>
+         <ListItemButton sx={{minWidth:"30px"}} component={Link} onClick={()=>{a.logout()}} to="/">
+         <ListItemIcon>
+           <Logout fontSize="small" />
+         </ListItemIcon>
+         Logout</ListItemButton>
+       </div>
+       {/* <MenuItem onClick={handleClose}><Link onClick={()=>{console.log("clicked logout"); a.logout()}} to="/" style={{textDecoration:"none"}} >Logout</Link></MenuItem> */}
+     </Menu>
               <div style={{display:"block",marginLeft:"10px",marginRight:"auto"}}>
               <Typography
             variant="h6"
@@ -346,27 +329,24 @@ function scrollFunction() {
         </Tabs>
                  
               </Toolbar>        
-              <Drawer 
+              <SwipeableDrawer 
             anchor="left"
             open={drawer}
             onClose={()=>{setDrawer(false)}}
             onOpen={()=>(setDrawer(true))}
           >
             <Grid container  sx={{Width:"50%",height:"100%", Display:"flex",flexDirection:"column", backgroundColor:"primary.main"}} >
-            <Link to="/" onClick={()=>{a.logout()}} style={{textDecoration:"none",textColor:"#FFFFFF",color:"#FFFFFF",minWidth:"50%"}}><Button  sx={{textColor:"#FFFFFF",color:"#FFFFFF"}}>
-              {a.loginText}
-            </Button>
-            </Link>
+
                <Link  style={{textDecoration:'none'}}   to="/posts"> <Button onClick={()=>setDrawer(false)} sx={{ color:"#fff" }}>Posts</Button></Link>
                <Link style={{textDecoration:'none'}}  to="/myPosts"> <Button onClick={()=>setDrawer(false)} sx={{ color:"#fff" }}>{"My Posts  " }  </Button></Link>
                <Link style={{textDecoration:'none'}}  to="/addposts"> <Button onClick={()=>setDrawer(false)}  sx={{ color:"#fff" }}>Add Post</Button></Link>
                <Link style={{textDecoration:'none'}}  to="/addFriends"> <Button onClick={()=>setDrawer(false)}  sx={{ color:"#fff" }}>Add Friends</Button></Link>
 
-            <Button sx={{textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}} minWidth href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button>
-            <Button sx={{textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
+             <a style={{paddingLeft:"0px"}}> <Button sx={{textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"left",paddingLeft:"0px"}} href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button></a>
+            <Button sx={{textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"left"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
             </Grid>
             
-          </Drawer>
+          </SwipeableDrawer>
 
             </Box>
 

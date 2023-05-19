@@ -10,7 +10,7 @@ const FriendsHome = () => {
     <>
     <Container>
     <Grid container >
-        <Grid item xs={12} sm={0} sx={{ display:{xs:"flex",sm:"none"},justifyContent:"center",marginTop:"2rem"}}><FriendsMobile></FriendsMobile></Grid>
+        <Grid item xs={12} sm={0} sx={{ display:{xs:"flex",sm:"none"},justifyContent:"center",marginTop:"0.5rem"}}><FriendsMobile></FriendsMobile></Grid>
         <Grid item xs={12} md={6} sx={{justifyContent:"center"}} ><AddFriends></AddFriends></Grid>
         <Grid item xs={12} md={6} sx={{justifyContent:"center"}}><RecievedFriends></RecievedFriends></Grid>
     </Grid>
