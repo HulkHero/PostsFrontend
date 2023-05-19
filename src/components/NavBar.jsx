@@ -246,9 +246,9 @@ function scrollFunction() {
 
     <Box sx={{display:{xs:"block",sm:"none",minHeight:"50px"}}}>
       <Head id="ns"  class="ns">
-      <Button onClick={()=>{setDrawer(!drawer)}} sx={{ display:"inline-block",color:"#fff",width:"50px" }} ><MenuRoundedIcon></MenuRoundedIcon></Button>
-      <IconButton onClick={handleClick} size={"small"}>
-      <Avatar  alt="H" src={a.avatar}> </Avatar></IconButton>
+      <IconButton onClick={()=>{setDrawer(!drawer)}} sx={{ display:"inline-block",color:"#fff" }} ><MenuRoundedIcon></MenuRoundedIcon></IconButton>
+      <IconButton onClick={handleClick} sx={{ width: 29, height: 29,mt:"0.3rem" }} size={"small"}>
+      <Avatar  alt="H" size={"small"}  sx={{ width: 29, height: 29 }} src={a.avatar}> </Avatar></IconButton>
    <Menu
        id="basic-menu"
        anchorEl={anchorEl}

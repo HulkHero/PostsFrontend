@@ -44,7 +44,7 @@ export default function FriendsMobile() {
 
   return (
     <> 
-    <div style={{minWidth:360,marginLeft:"auto",marginRight:"auto"}}>
+    <div style={{minWidth:"95%",maxWidth:"100%",}}>
     <List sx={{}} >
      <ListItem> 
         <Typography component="h6" variant='h6' >

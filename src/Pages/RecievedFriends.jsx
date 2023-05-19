@@ -48,7 +48,7 @@ const RecievedFriends = () => {
   return (
     <> 
 
-    <List sx={{ width: '100%', maxWidth: 360 ,marginLeft:"auto",marginRight:"auto"}}>
+    <List sx={{ maxWidth: 360 ,marginLeft:{xs:"3px",sm:"auto"},marginRight:{xs:"3px",sm:"auto"}}}>
      <ListItem> <div>
         <Typography component="h6" variant='h6' >
         Received Requests

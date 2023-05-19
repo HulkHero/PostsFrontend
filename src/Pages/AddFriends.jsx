@@ -8,9 +8,56 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { IconButton, ListItemButton, ListItemIcon,Icon, TextField, Button,Box ,Snackbar} from '@mui/material';
+import { IconButton, ListItemButton, ListItemIcon,Icon, TextField, Button,Box ,Snackbar,InputBase, ButtonBase} from '@mui/material';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import NoteContext from "../context/noteContext"
+import {styled,alpha} from "@mui/material/styles"
+import theme from "../Theme"
+import SearchIcon from '@mui/icons-material/Search';
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: "0px",
+  borderTopLeftRadius:"7px",
+  borderBottomLeftRadius:"7px",
+  backgroundColor: "#ccffdc",
+  // backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: " #99ffb9",
+  },
+ 
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    // marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 1),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  opacity:0.65
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(3)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
 
 const AddFriends = () => {
            
@@ -48,15 +95,29 @@ console.log("data",Data)
   return (
     <> 
       
-    <List sx={{ maxWidth: 360 ,marginLeft:"auto",marginRight:"auto"}}>
+    <List sx={{ maxWidth: 360 ,marginLeft:{xs:"3px",sm:"auto"},marginRight:{xs:"3px",sm:"auto"}}}>
      <ListItem> <div>
         <Typography component="h6" variant='h6' sx={{mb:"5px"}}>
             Send Requests
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} >
+        <Box component="form" onSubmit={handleSubmit} sx={{display:"flex",justifyContent:"center"}} >
+        <Search sx={{display:"inline-block"}}>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              name="search"
+              label="search"
+              type="search"
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
 
-        <TextField name="search" label="search" type="search" ></TextField>
-        <Button variant="contained" sx={{marginTop:"10px",ml:"5px"}} type="submit">Search</Button>
+        {/* <TextField name="search" label="search" type="search" ></TextField> */}
+        <Button variant="contained" sx={{p:"0px",paddingX:2,mr:"auto",boxShadow:"none",  borderRadius: "0px",
+  borderTopRightRadius:"7px",
+  borderBottomRightRadius:"7px",}} type="submit">Search</Button>
         </Box>
     </div>
     </ListItem>
