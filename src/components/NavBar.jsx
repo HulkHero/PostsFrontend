@@ -152,16 +152,29 @@ function scrollFunction() {
      
       <Box sx={{display:{xs:'none',sm:"block"}}}>
       <Toolbar sx={{display: 'flex',minHeight:"50px", "&.MuiToolbar-root":{minHeight:"50px"}}}>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Search >
+        
+          {/* <MenuIcon /> */}
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/Posts"
+            sx={{
+              mr: 2,
+              // pr:"4rem",
+             alignSelf: 'center',
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.1rem',
+              color: 'inherit',
+              textDecoration: 'none',
+              fontSize: '1.4rem',
+            }}
+          >
+            {"<Hulk>"}
+          </Typography>
+        
+        <Search sx={{display:{xs:"none",md:"block"}}} >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -213,8 +226,8 @@ function scrollFunction() {
         </Tab>
         </Tabs>
        
-    <Button sx={{ml:'auto',textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}} minWidth href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button>
-    <Button sx={{display:"inline-block",textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
+    <Button sx={{display:{xs:"none",md:"inline-block"},ml:'auto',textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}} minWidth href="https://drive.google.com/file/d/1rVfqyZF8uD5zAJhOcd0YqwRak_PISEfj/view?usp=sharing" target={" "} >APK</Button>
+    <Button sx={{display:{xs:"none",md:"inline-block"},textColor:"#FFFFFF",color:"#FFFFFF",textAlign:"center"}}  minWidth href="https://drive.google.com/file/d/1698nyqMNmiHEuP1_5crfDfzbjpl_DJZB/view?usp=sharing" target={" "} >Other Projects</Button>
     <IconButton onClick={handleClick} size={"small"}>
       
      

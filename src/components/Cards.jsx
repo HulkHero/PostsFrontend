@@ -101,7 +101,7 @@ var result = date.toLocaleDateString('en', options);
         title={props.name}
         subheader={result}
       />
-      <Typography variant="h5" component="h5" sx={{paddingLeft:"6px"}}>{props.heading}</Typography>
+      <Typography variant="h5" component="h5" sx={{paddingLeft:2}}>{props.heading}</Typography>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -131,7 +131,7 @@ var result = date.toLocaleDateString('en', options);
       />
       </Container>
       </CardActionArea>:""}
-      <CardContent>
+      <CardContent sx={{paddingY:"12px"}}>
         <Typography variant="body2" color="text.secondary">
          {props.caption}
         </Typography>
