@@ -51,23 +51,21 @@ function App() {
 
           {islogged == true ?
 
-            <NavBar></NavBar> : null}
+            <> <NavBar></NavBar>
 
+              <Routes>
+
+
+
+                <Route path='/posts' element={<Home />} ></Route>
+                <Route path='addposts' element={<AddPosts />}></Route>
+                <Route path='myPosts' element={<Profile />}></Route>
+                <Route path="addFriends" element={<FriendsHome />} />
+              </Routes></>
+            : null}
           <Routes>
-
-
-
-            <Route path='/posts' element={<Home />} ></Route>
-            <Route path='addposts' element={<AddPosts />}></Route>
-            <Route path='myPosts' element={<Profile />}></Route>
-            <Route path="addFriends" element={<FriendsHome />} />
-          </Routes>
-
-
-          <Routes>
-            <Route exact path='/' element={<SignIn />}>
-              <Route exact path='signup' element={<Signup />} />
-            </Route>
+            <Route exact path='/' element={<SignIn />}></Route>
+            <Route exact path='signup' element={<Signup />} />
           </Routes>
 
         </Router>

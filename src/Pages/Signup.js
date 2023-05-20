@@ -8,6 +8,8 @@ import { useState } from "react"
 import { Link } from 'react-router-dom'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { useNavigate } from "react-router-dom";
+
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -22,6 +24,7 @@ export default function SignUp() {
   const [errorMail, setErrorMail] = useState(false)
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setOpen(false)
@@ -44,6 +47,7 @@ export default function SignUp() {
         console.log(response)
         setOpen(true)
         setLoading(false)
+
         // console.log(response.data.token)
         // a.setToken(response.data.token)
 
@@ -75,14 +79,14 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
               Signed Up Successfully: Login Now
             </Alert>
           </Snackbar>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} >
+              <Grid item xs={12} sx={{ mb: 2 }}>
                 <TextField
                   autoComplete="given-name"
                   name="name"
@@ -96,7 +100,7 @@ export default function SignUp() {
 
 
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ flex: 1 }}>
                 <TextField
                   required
                   fullWidth
@@ -111,7 +115,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   required
-                  fullWidth
+                  fullWidth={true}
                   name="password"
                   label="Password"
                   type="password"
@@ -119,14 +123,22 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
+              <Grid item xs={12} sx={{ mt: 0, pt: 0 }}>
+                <Button
+                  component={Link}
+                  variant="text"
+                  to="/"
 
-              <Box sx={{ m: 1, position: 'relative' }}>
+                >Login</Button>
+              </Grid>
+
+              <Grid item xs={12} sx={{ minWidth: "100%" }}>
                 <Button
                   type="submit"
                   disabled={loading}
-                  fullWidth
+                  fullWidth={true}
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 0, mb: 2, minwidth: "100%" }}
                 >
                   Sign Up
                 </Button>
@@ -143,13 +155,13 @@ export default function SignUp() {
                     }}
                   />
                 )}
-              </Box>
+              </Grid>
 
             </Grid>
           </Box>
         </Box>
 
       </Container>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }

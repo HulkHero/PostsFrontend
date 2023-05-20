@@ -33,9 +33,9 @@ export default function SignIn() {
   const theme = useTheme()
   const a = useContext(NoteContext)
   const Navigate = useNavigate();
-  const [open, setOpen] = useState(false)
+
   const [openSnack, setOpenSnack] = useState(false)
-  const [show, setSignup] = useState(false)
+
   const [loading, setLoading] = useState(false)
   const handleSubmit = (event) => {
     setLoading(true)
@@ -108,7 +108,6 @@ export default function SignIn() {
 
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      {show == true ? <Outlet></Outlet> : " "}
       <Box
         sx={{
           marginTop: 8,
@@ -149,7 +148,7 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          <Link onClick={() => setSignup(!show)} sx={{ textDecoration: 'none !important', textDecorationLine: "none" }} to='/signup'>Signup</Link>
+          <Link sx={{ textDecoration: 'none !important', textDecorationLine: "none" }} to='/signup'>Signup</Link>
           <Box sx={{ m: 1, position: 'relative' }}>
             <Button
               type="submit"

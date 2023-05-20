@@ -17,7 +17,7 @@ export default function AlignItemsList() {
 
   const a = useContext(NoteContext)
     const [data, setData] = useState([]);
-    
+    const [text, setText] = useState("");
     useEffect(() => {
       if(a.id){
     // Axios.get(`https://nice-plum-panda-tam.cyclic.app/showFriends/${a.id}`).then((res) => {
@@ -26,10 +26,22 @@ export default function AlignItemsList() {
     //   console.log(res.data.img,"her")
     //  setData(res.data.user.friends);
     // }) } 
+     setText("Loading...")
     Axios.get( `https://nice-plum-panda-tam.cyclic.app/myFriends/${a.id}`).then((res) => {
-      console.log("resFriends",res.data)
-      setData(res.data)}
-      )
+      console.log("resFriends",res)
+      if(res.data=="error2"){
+
+       setText("No Friends")
+       
+      }
+      else{
+        setData(res.data);
+      }
+    
+    }
+      ).catch((err) => {
+        setText("No Friends")
+        console.log(err)})
       }
     }, [a.id])
     
@@ -45,7 +57,7 @@ export default function AlignItemsList() {
     </div>
     </ListItem>
     <Divider variant='middle '></Divider>
-    {data.length>0 ? data.map((element,index)=>{
+    {data.length ? data.map((element,index)=>{
           // let img12= avatar[index]
           // console.log(img12,"img12")
           const base64= btoa(new Uint8Array(element.avatar.data.data).reduce(function (data, byte) {
@@ -58,7 +70,7 @@ export default function AlignItemsList() {
        <FriendItem  props={element} img={img} id={a.id} ></FriendItem>
      </>)
     })
-    :<Typography sx={{ml:"20px"}}>No Friends to show</Typography>
+    :<Typography sx={{ml:"20px"}}>{text}</Typography>
     }
     </List>
     </Card>
