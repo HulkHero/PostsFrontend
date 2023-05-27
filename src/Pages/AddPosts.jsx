@@ -4,6 +4,7 @@ import { useState,useContext,useRef,useEffect } from 'react';
 import { Button, TextField ,Grid, Snackbar, Alert,styled,IconButton} from '@mui/material';
 import NoteContext from "../context/noteContext"
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
+import LoadingButton from '@mui/lab/LoadingButton';
 const CssTextField = styled(TextField)({
   maxWidth:"600px",
   marginTop:"20px",
@@ -44,7 +45,7 @@ const CssTextField = styled(TextField)({
 
 const AddPosts = () => {
   const a = useContext(NoteContext)
-
+  const [loader, setLoader] = useState(false)
   if (a.token)
   {}
     else{
@@ -117,7 +118,8 @@ const AddPosts = () => {
   }
 
  const onSubmit=(e)=>{
-  e.preventDefault();
+   e.preventDefault();
+  setLoader(true)
   console.log("user",file)
   const formData= new FormData();
   formData.append("heading",user.heading)
@@ -132,6 +134,7 @@ const AddPosts = () => {
   if(a.token){
     Axios.post("https://nice-plum-panda-tam.cyclic.app/addStory",formData,{headers:{'content-type': 'multipart/form-data'}}).then((response)=>{
       console.log(response)
+      setLoader(false)
       setOpenSnack(true)   
      })
   }
@@ -170,7 +173,7 @@ const AddPosts = () => {
          </Button>
           </Grid>
 
-      <Grid item xs={12} sx={{display:"flex",flexDirection:"row"}}><Button variant="contained" type="submit" sx={{alignSelf:"flex-end",marginLeft:"auto",mt:"20px",width:"100%"}}>Post</Button></Grid>
+      <Grid item xs={12} sx={{display:"flex",flexDirection:"row"}}><LoadingButton loading={loader} variant="contained" type="submit" sx={{alignSelf:"flex-end",marginLeft:"auto",mt:"20px",width:"100%"}}>Post</LoadingButton></Grid>
       </form>
       <Snackbar open={openSnack} autoHideDuration={4000} onClose={()=>setOpenSnack(false)}>
   <Alert onClose={()=>{setOpenSnack(false)}} severity="success" variant="filled" sx={{ width: '100%' }}>

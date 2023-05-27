@@ -197,9 +197,6 @@ function scrollFunction() {
           fontSize:"xx large",
         },
         color:"#FFFFFF"}} icon={line===0? <Tooltip title="Home"><HomeIcon/></Tooltip> :< Tooltip title="Home"><HomeOutlinedIcon/></Tooltip>} to="/posts" component={Link}  >
-        
-          
-       
         </Tab>
         <Tab sx={{'& .MuiSvgIcon-root':{
           fontSize:"xx large",

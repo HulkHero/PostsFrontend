@@ -14,7 +14,7 @@ import {useState ,useEffect,useContext} from "react";
 import "./fri.css"
 import FriendItem from './frienditem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 export default function FriendsMobile() {
   const [open, setOpen] = React.useState(true);
 
@@ -22,10 +22,9 @@ export default function FriendsMobile() {
     setOpen(!open);
   };
 
-
-  const a = useContext(NoteContext)
-    const [data, setData] = useState([]);
-    
+   const a= useContext(NoteContext);
+  const [data, setData] = useState([]);
+    const [text, setText] = useState("");
     useEffect(() => {
       if(a.id){
     // Axios.get(`https://nice-plum-panda-tam.cyclic.app/showFriends/${a.id}`).then((res) => {
@@ -34,12 +33,25 @@ export default function FriendsMobile() {
     //   console.log(res.data.img,"her")
     //  setData(res.data.user.friends);
     // }) } 
+     setText("Loading...")
     Axios.get( `https://nice-plum-panda-tam.cyclic.app/myFriends/${a.id}`).then((res) => {
-      console.log("resFriends",res.data)
-      setData(res.data)}
-      )
+      console.log("resFriends",res)
+      if(res.data=="error2"){
+
+       setText("No Friends")
+       
+      }
+      else{
+        setData(res.data);
+      }
+    
+    }
+      ).catch((err) => {
+        setText("No Friends")
+        console.log(err)})
       }
     }, [a.id])
+    
     
 
   return (
@@ -52,7 +64,7 @@ export default function FriendsMobile() {
         </Typography>
         <IconButton onClick={handleClick} size='small' sx={{marginLeft:"auto"}}>
          
-          <ExpandMoreIcon />
+          {open==false?<ExpandMoreIcon />:<ExpandLessIcon />}
          
          </IconButton>
         
@@ -75,7 +87,7 @@ export default function FriendsMobile() {
      </>)
     })
     
-    :<Typography sx={{ml:"20px"}}>No Friends to show</Typography>
+    :<Typography sx={{ml:"20px"}}>{text}</Typography>
     }
     </Collapse>
     </List>

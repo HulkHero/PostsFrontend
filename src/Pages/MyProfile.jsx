@@ -5,6 +5,7 @@ import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import {useState,useEffect,useContext,useRef} from "react"
 import NoteContext from "../context/noteContext"
 import Axios from "axios"
+import LoadingButton from '@mui/lab/LoadingButton'; 
 const CssTextField = styled(TextField)({
   maxWidth:"600px",
   marginTop:"20px",
@@ -52,7 +53,7 @@ const MyProfile = () => {
       createrId:a.id,
   });
   const [openSnack, setOpenSnack] = useState(false)
-  
+  const [loader, setLoader] = useState(false)
   const [previewUrl, setPreviewUrl] = useState(null);
   const [data, setData] = useState();
   const [isValid, setIsValid] = useState(false);
@@ -116,6 +117,7 @@ useEffect( ()=>{
   }
   const onSubmit=(e)=>{
     e.preventDefault();
+    setLoader(true);
     console.log("user",file)
     const formData= new FormData();
     formData.append("status",user.status)
@@ -131,6 +133,7 @@ useEffect( ()=>{
       Axios.post("https://nice-plum-panda-tam.cyclic.app/avatar",formData,{headers:{'content-type': 'multipart/form-data'}}).then((response)=>{
         console.log(response)
        a.setAvatar(dumyImg)
+        setLoader(false);
         setOpenSnack(true)
        })
   
@@ -186,7 +189,7 @@ useEffect( ()=>{
     
     </Grid>
     <Grid item xs={12} style={{display:"flex",justifyContent:"center", marginTop:"20px"}}><CssTextField label={"Status"} onChange={(e)=>handleChange(e)} value={defaultText} name="status" ></CssTextField></Grid>
-    <Grid item xs={12} sx={{display:"flex",flexDirection:"row",justifyContent:"center"}}><Button variant="contained" type="submit" sx={{alignSelf:"center",mt:"20px",width:"80%"}}>Update</Button></Grid>
+    <Grid item xs={12} sx={{display:"flex",flexDirection:"row",justifyContent:"center"}}><LoadingButton loading={loader} variant="contained" type="submit" sx={{alignSelf:"center",mt:"20px",width:"80%"}}>Update</LoadingButton></Grid>
     <Snackbar open={openSnack} autoHideDuration={4000} onClose={() => setOpenSnack(false)}>
           <Alert onClose={() => { setOpenSnack(false) }} severity="success" variant="filled" sx={{ width: '100%' }}>
             Done

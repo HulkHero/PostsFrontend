@@ -8,13 +8,13 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { IconButton, ListItemButton, ListItemIcon,Icon, TextField, Button,Box ,Snackbar,InputBase, ButtonBase} from '@mui/material';
+import { IconButton, ListItemButton, ListItemIcon,Icon, TextField, Button,Box ,Snackbar,InputBase} from '@mui/material';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import NoteContext from "../context/noteContext"
 import {styled,alpha} from "@mui/material/styles"
 import theme from "../Theme"
 import SearchIcon from '@mui/icons-material/Search';
-
+import LoadingButton from '@mui/lab/LoadingButton';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: "0px",
@@ -66,14 +66,7 @@ const AddFriends = () => {
 
     const [Data, setData] = useState([])
     const [openSnack, setopenSnack] = useState(false)
-  //  useEffect(() => {
-  //    Axios.get("http://localhost:5000/addFriends").then(response => {
-
-  //    console.log(response);
-  //     setData(response.data);
-  //    })
-   
-  //  },[ ])
+    const [loader, setLoader] = useState(false);
 
    const SendRekuest= async(targetId)=>{
       await Axios.post("https://nice-plum-panda-tam.cyclic.app/sendRekuest",{senderId: a.id, targetId: targetId}).then(response => {
@@ -84,13 +77,14 @@ const AddFriends = () => {
 
    const handleSubmit = (event) => {
       event.preventDefault();
+      setLoader(true)
       const Data= new FormData(event.currentTarget)
       Axios.get(`https://nice-plum-panda-tam.cyclic.app/showAddFriends/${Data.get("search")}`).then((response) => {console.log(response)
-            setData(response.data)})
+            setData(response.data)
+             setLoader(false)
+          } )
 
    }
-   
-
 console.log("data",Data)
   return (
     <> 
@@ -115,9 +109,9 @@ console.log("data",Data)
           </Search>
 
         {/* <TextField name="search" label="search" type="search" ></TextField> */}
-        <Button variant="contained" sx={{p:"0px",paddingX:2,mr:"auto",boxShadow:"none",  borderRadius: "0px",
+        <LoadingButton loading={loader} variant="contained" sx={{p:"0px",paddingX:2,mr:"auto",boxShadow:"none",  borderRadius: "0px",
   borderTopRightRadius:"7px",
-  borderBottomRightRadius:"7px",}} type="submit">Search</Button>
+  borderBottomRightRadius:"7px",}} type="submit">Search</LoadingButton>
         </Box>
     </div>
     </ListItem>
