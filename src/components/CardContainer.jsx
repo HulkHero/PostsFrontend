@@ -8,6 +8,10 @@ import { useContext } from 'react';
 import NoteContext from '../context/noteContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@mui/material/CircularProgress'
+import { useDispatch,useSelector } from 'react-redux';
+import { addData ,concatData, like,dislike,fetchMoreData} from '../store';
+import {store} from "../store";
+
 const CardContainer = () => {
   useEffect(() => {
     console.log(window.scrollY)
@@ -15,11 +19,12 @@ const CardContainer = () => {
    },[window.scrollY])
  // var data;
  const a= useContext(NoteContext)
- const [data,setData]=useState([])
+
  const [lik,setLik]=useState()
  const [skip,setSkip]=useState(0)
- const [hasMore,setHasMore]=useState(true)
- console.log("data render",data)
+
+ const dispatch = useDispatch();
+
 // var skip=0;
  var limit=2;
  if (a.token)
@@ -36,10 +41,11 @@ const CardContainer = () => {
    }
  }
  console.log(window)
+ const dataRedux=useSelector((state)=> state.data.value )
    
   
     useEffect(() => {
-      if(data.length>0){
+      if(dataRedux.length>0){
 
       }
       else{
@@ -53,7 +59,8 @@ const CardContainer = () => {
           
           console.log("response",response)
           setSkip(2)
-          setData(response.data)
+         // setData(response.data)
+          dispatch(addData(response.data))  
           
           
         })
@@ -62,8 +69,9 @@ const CardContainer = () => {
 
     },[])
 
-    const onlike=(id)=>{
+    const onlike=(id,key)=>{
       if (a.id){
+        dispatch(like({userid:a.id,key:key}))
         Axios.put(`https://nice-plum-panda-tam.cyclic.app/likePost/${id}/${a.id}`).then((response) => {
          
           console.log("response:dislike", response)
@@ -77,8 +85,8 @@ const CardContainer = () => {
      
 
     }
-    const ondislike=(id)=>{
-      
+    const ondislike=(id,key)=>{
+      dispatch(dislike({userid:a.id,key:key}))
       Axios.put(`https://nice-plum-panda-tam.cyclic.app/dislikePost/${id}/${a.id}`).then((response) => {
         setLik(response.data.likes.length);
            
@@ -86,11 +94,15 @@ const CardContainer = () => {
       })
 
    }
+   const more= useSelector((state)=> state.data.fetchMore )
+   console.log("more",more)
 
-   
    console.log("rendering")
 
-   const fetchMoreData=async()=>{
+   const fetchMoreData1=async()=>{
+    if(more===true){
+
+    
     setSkip(skip+2);
     console.log("inside fetchMoreData")
     
@@ -102,28 +114,29 @@ const CardContainer = () => {
       
         console.log("response",response)
        
-        
-        setData(data.concat(response.data))
+        dispatch(concatData(response.data))
+       // setData(data.concat(response.data))
       
 
     }).catch(response=>{
       console.log("response error",response)
       if (response.response.status ==300){
         console.log("300")
-        setHasMore(false)
+      
+        dispatch(fetchMoreData())
       }
-    })
+    })}
    }
 
   return (
     <>
    {
     <Paper evaluation={0} sx={{minWidth:"100%",display:"flex:",flexDirection:"column",alignItems:"center",border:"0px",boxShadow:"none",justifyContent:"center",minHeight:"100%",backgroundColor:"#f0f2f5"}} spacing={2}>
-    { data.length > 0 ? 
+    { dataRedux.length > 0 ? 
     <InfiniteScroll
-     dataLength={data.length}
-     next={fetchMoreData}
-     hasMore={hasMore}
+     dataLength={dataRedux.length}
+     next={fetchMoreData1}
+     hasMore={more}
      loader={ 
       <div style={{ display: 'flex',justifyContent:"center" }}>
       <Box sx={{ display: 'flex',justifyContent:"center" }}>
@@ -138,7 +151,7 @@ const CardContainer = () => {
       </p>
     }
     >      
-    { data.map((element)=>{
+    { dataRedux.map((element,index)=>{
        let base64 = null;
        let img=null;
        if (element.image.data) {
@@ -164,7 +177,7 @@ const CardContainer = () => {
        return (
         <>
         <div style={{display: 'flex',flexDirection: 'column',alignItems:"center"}}>
-         <Cards key={element._id} imgAvatar={imgAvatar} ondislike={ondislike} userId={a.id} likes={element.likes} id={element._id} name={element.creatername} date={element.date} image={img}  heading={element.heading} caption={element.caption} onlike={onlike} displayLike={lik} isMyPosts={false}></Cards>
+         <Cards key={index} index={index}  imgAvatar={imgAvatar} ondislike={ondislike} userId={a.id} likes={element.likes} id={element._id} name={element.creatername} date={element.date} image={img}  heading={element.heading} caption={element.caption} onlike={onlike} displayLike={lik} isMyPosts={false}></Cards>
         </div>
         </>
       )

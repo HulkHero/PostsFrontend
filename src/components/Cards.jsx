@@ -137,14 +137,13 @@ var result = date.toLocaleDateString('en', options);
         </Typography>
       </CardContent>
       <CardActions >
-        <IconButton disableRipple={true} onClick={()=>{ if(like==true){props.ondislike(props.id);setnum(props.likes.length--);
+        <IconButton disableRipple={true} onClick={()=>{ if(like==true){props.ondislike(props.id,props.index);
+        // setnum(props.likes.length--);
         setLike(false)
-        setAnimate(false)
        }else{
-          props.onlike(props.id);
+          props.onlike(props.id,props.index);
           setLike(true)
-          setAnimate(true)
-          setnum(props.likes.length++)
+          // setnum(props.likes.length++)
         }}} >
          {  like==true? <LikeIcon className={animate==true?"likeIconAnimation":" "}  />  :<FavoriteBorderIcon></FavoriteBorderIcon>    
          }
