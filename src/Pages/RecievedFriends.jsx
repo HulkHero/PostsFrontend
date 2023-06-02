@@ -32,12 +32,13 @@ const RecievedFriends = () => {
    const AcceptRekuest=(targetId)=>{
        Axios.put("https://nice-plum-panda-tam.cyclic.app/acceptRekuest",{senderId: a.id, targetId: targetId}).then(response => {
           console.log(response);
-          setData(Data && Data.map((item)=>{
-               return item._id!=targetId;
+          // setData(Data && Data.map((item)=>{
+          //      return item._id!=targetId;
         
-          }))
+          // }))
+          setData(prevData => prevData.filter(item => item._id !== targetId))
           if(Data.length==0){
-            setData("no rekuests")
+            setData([])
           }
        })
 
@@ -58,7 +59,7 @@ const RecievedFriends = () => {
 
     <Divider variant='middle '></Divider>
     {
-      Data &&  Data.map((element)=>{
+      Data && Data.length >0 && Data.map((element)=>{
            
             return(
                 <>
