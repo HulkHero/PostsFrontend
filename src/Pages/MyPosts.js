@@ -30,6 +30,7 @@ const MyPosts = () => {
     const id = a.id
     Axios.get(`https://nice-plum-panda-tam.cyclic.app/myPosts/${id}`, {
       headers: {
+
         'Authorization': a.token
       }
     }).then((response) => {
