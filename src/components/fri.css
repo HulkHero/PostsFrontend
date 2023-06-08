@@ -19,7 +19,7 @@
 
 }
 
-@keyframes likeButton {  
+/* @keyframes likeButton {  
   0% {
     transform:scale(1);
   }
@@ -35,5 +35,5 @@
   animation-name: likeButton;
   animation-duration:3s ;
      
-}
+} */
 

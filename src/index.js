@@ -7,13 +7,13 @@ import { Provider } from 'react-redux';
 import { store } from "./store"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+
+  <NoteState>
     <Provider store={store}>
-      <NoteState>
-        <App />
-      </NoteState>
+      <App />
     </Provider>
-  </React.StrictMode>
+  </NoteState>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

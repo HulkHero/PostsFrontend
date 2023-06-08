@@ -82,7 +82,7 @@ var result = date.toLocaleDateString('en', options);
   
 
   return (
-    <Card elevation={3} sx={{  maxWidth:{xs:"95%",sm:"75%"}, minWidth:{xs:"95%",sm:"75%"},alignSelf:"center",mb:1,mt:2,borderRadius:"10px"}}>
+    <Card elevation={3} sx={{ alignSelf:"center",mr:"auto",ml:"auto", maxWidth:{xs:"95%",sm:"75%"}, minWidth:{xs:"95%",sm:"75%"},alignSelf:"center",mb:1,mt:2,borderRadius:"10px"}}>
       <CardHeader
         avatar={
           <Avatar  sx={{width:"50px",height:"50px" ,bgcolor: red[500] }} alt={props.name[0]} src={props.imgAvatar}>

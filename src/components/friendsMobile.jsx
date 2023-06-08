@@ -51,9 +51,6 @@ export default function FriendsMobile() {
         console.log(err)})
       }
     }, [a.id])
-    
-    
-
   return (
     <> 
     <div style={{minWidth:"95%",maxWidth:"100%",}}>

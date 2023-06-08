@@ -12,40 +12,39 @@ import NoteContext from "../context/noteContext";
 import {useState ,useEffect,useContext} from "react";
 import "./fri.css"
 import FriendItem from './frienditem';
-
+import { setFriends,fetchFriends } from '../store';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 export default function AlignItemsList() {
 
   const a = useContext(NoteContext)
-    const [data, setData] = useState([]);
-    const [text, setText] = useState("");
+    const dispatch = useDispatch();
+ 
     useEffect(() => {
-      if(a.id){
-    // Axios.get(`https://nice-plum-panda-tam.cyclic.app/showFriends/${a.id}`).then((res) => {
-    //   console.log(res,"hellllll");
-    //   setAvatar(res.data.img)
-    //   console.log(res.data.img,"her")
-    //  setData(res.data.user.friends);
-    // }) } 
-     setText("Loading...")
-    Axios.get( `https://nice-plum-panda-tam.cyclic.app/myFriends/${a.id}`).then((res) => {
-      console.log("resFriends",res)
-      if(res.data=="error2"){
-
-       setText("No Friends")
-       
+      if(a.id){ 
+        dispatch(fetchFriends(a.id));
       }
-      else{
-        setData(res.data);
-      }
-    
-    }
-      ).catch((err) => {
-        setText("No Friends")
-        console.log(err)})
-      }
+    //  setText("Loading...")
+    // Axios.get( `https://nice-plum-panda-tam.cyclic.app/myFriends/${a.id}`).then((res) => {
+    //   console.log("resFriends",res)
+    //   if(res.data=="error2"){
+    //    setText("No Friends")
+    //   }
+    //   else{
+    //     setData(res.data)
+    //     dispatch(setFriends(res.data))
+    //   }
+    // }
+    //   ).catch((err) => {
+    //     setText("No Friends")
+    //     console.log(err)})
+    //   }
     }, [a.id])
     
-
+    const dataRedux= useSelector((state) => state.friend.value);
+    const loading= useSelector((state) => state.friend.loading);
+    const text= useSelector((state) => state.friend.text);
+    console.log(dataRedux,"dataRedux")
   return (
     <> 
     <Card style={{minWidth:"100%",zIndex:"10000",minHeight:"100vh"}}>
@@ -57,7 +56,7 @@ export default function AlignItemsList() {
     </div>
     </ListItem>
     <Divider variant='middle '></Divider>
-    {data.length ? data.map((element,index)=>{
+    {dataRedux.length? dataRedux.map((element,index)=>{
           // let img12= avatar[index]
           // console.log(img12,"img12")
           const base64= btoa(new Uint8Array(element.avatar.data.data).reduce(function (data, byte) {
@@ -67,10 +66,11 @@ export default function AlignItemsList() {
         const img=`data:image/png;base64,${base64}`
      return(
       <>
-       <FriendItem  props={element} img={img} id={a.id} ></FriendItem>
+       <FriendItem key={index}  props={element} img={img} id={a.id} ></FriendItem>
      </>)
     })
-    :<Typography sx={{ml:"20px"}}>{text}</Typography>
+    : <>{loading? <Typography sx={{ml:"20px"}}>{text}</Typography>:<Typography sx={{ml:"20px"}}>No Friends</Typography>
+  }</>
     }
     </List>
     </Card>
