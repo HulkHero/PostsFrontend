@@ -4,13 +4,20 @@ import { produce } from 'immer';
 
 const dataSlice = createSlice({
     name: "data",
-    initialState: { value: {}, skip: 0, fetchMore: true, firstFetch: true },
+    initialState: { value: {}, skip: 0, fetchMore: true, firstFetch: true, savedScroll: 0 },
     reducers: {
         setSkip: (state, action) => {
             state.skip = state.skip + 2
         },
         addData: (state, action) => {
             state.value = action.payload
+        },
+        RefreshAllData: (state, action) => {
+            state.value = [];
+            state.skip = 0;
+            state.fetchMore = true;
+            state.firstFetch = true;
+
         },
 
         removeData: (state, action) => {
@@ -45,11 +52,14 @@ const dataSlice = createSlice({
         },
         fetchFirstData: (state, action) => {
             state.firstFetch = false
+        },
+        setsavedScroll: (state, action) => {
+            state.savedScroll = action.payload
         }
     }
 })
 
-export const { addData, removeData, concatData, like, dislike, fetchMoreData, fetchFirstData, setSkip, } = dataSlice.actions;
+export const { addData, removeData, concatData, like, dislike, fetchMoreData, fetchFirstData, setSkip, RefreshAllData, setsavedScroll } = dataSlice.actions;
 
 
 

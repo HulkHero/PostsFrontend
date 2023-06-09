@@ -102,25 +102,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 const NavBar = () => {
   const a= useContext(NoteContext)
-  if (a.token)
-  {}
-  else{
-    const getToken=sessionStorage.getItem("token");
+  // if (a.token)
+  // {}
+  // else{
+  //   const getToken=sessionStorage.getItem("token");
    
-      const getid=sessionStorage.getItem("id");
-      const getcreatername=sessionStorage.getItem("creatername");
-      const avatar=sessionStorage.getItem("avatar");
-    if(getToken!==null){
-      a.setToken(getToken)
-      a.setId(getid)
-      a.setcreatername(getcreatername)
-      a.setavatar(avatar);
-    }
-  }
+  //     const getid=sessionStorage.getItem("id");
+  //     const getcreatername=sessionStorage.getItem("creatername");
+  //     const avatar=sessionStorage.getItem("avatar");
+  //   if(getToken!==null){
+  //     a.setToken(getToken)
+  //     a.setId(getid)
+  //     a.setcreatername(getcreatername)
+  //     a.setavatar(avatar);
+  //   }
+  // }
 
 
   window.onscroll = function() {scrollFunction()};
-  console.log("a.avatar",a.avatar)
+
   
 
   

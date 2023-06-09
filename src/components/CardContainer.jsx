@@ -9,7 +9,7 @@ import NoteContext from '../context/noteContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@mui/material/CircularProgress'
 import { useDispatch,useSelector } from 'react-redux';
-import { addData ,concatData, like,dislike,fetchMoreData,setSkip} from '../store';
+import { addData ,concatData, like,dislike,fetchMoreData,setSkip, RefreshAllData, fetchFirstData,setsavedScroll} from '../store';
 import {store} from "../store";
 
 const CardContainer = () => {
@@ -38,6 +38,7 @@ const CardContainer = () => {
  }
 
  const dataRedux=useSelector((state)=> state.data.value )
+ const firstfetch=useSelector((state)=> state.data.firstFetch )
  const skip=useSelector((state)=> state.data.skip )
    
   
@@ -52,21 +53,13 @@ const CardContainer = () => {
             authorization : a.token,
           }
         }).then((response)=>{
-          console.log("response")
-          
-          console.log("response",response)
           dispatch(setSkip())
          // setData(response.data)
+         dispatch(fetchFirstData)
           dispatch(addData(response.data))  
-   
-         
-          
-          
         })
       }
-      
-
-    },[])
+    },[skip])
 
     const onlike=(id,key)=>{
       if (a.id){
@@ -109,9 +102,6 @@ const CardContainer = () => {
     console.log("skip",skip)
     console.log("limit",limit)
     await Axios.get(`https://nice-plum-panda-tam.cyclic.app/batchData/${skip}/${limit}`).then((response)=>{
-       
-
-      
         console.log("response",response)
          dispatch(setSkip())
         dispatch(concatData(response.data))
@@ -126,8 +116,12 @@ const CardContainer = () => {
     })}
    }
 
-   const dataLike=useSelector((state)=> state.data.likeData )
-   console.log("dataLike",dataLike)
+    const RefreshData=async()=>{
+      dispatch(RefreshAllData())
+    }
+    
+   
+
   return (
     <>
    {
@@ -137,10 +131,13 @@ const CardContainer = () => {
      dataLength={dataRedux.length}
      next={fetchMoreData1}
      hasMore={more}
+      refreshFunction={RefreshData}
+     scrollThreshold={0.7}
+      // scrollY={CurrentScroll}
      loader={ 
       <div style={{ display: 'flex',justifyContent:"center" }}>
-      <Box sx={{ display: 'flex',justifyContent:"center" }}>
-      <h4 >Loading...</h4>
+      <Box sx={{ display: 'flex',justifyContent:"center"}}>
+       <h4>Loading...</h4>
     </Box>
     </div>
     }
@@ -150,6 +147,17 @@ const CardContainer = () => {
         <b>Khatam!!!</b>
       </p>
     }
+    
+    pullDownToRefresh
+    pullDownToRefreshThreshold={50}
+    pullDownToRefreshContent={
+      <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+    }
+    releaseToRefreshContent={
+      <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+    }
+
+
     >      
     { dataRedux.map((element,index)=>{
        let base64 = null;

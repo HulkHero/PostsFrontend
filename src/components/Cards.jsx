@@ -49,7 +49,6 @@ const LikeIcon=styled(FavoriteIcon)(({ theme })=>({
 
 const Cards = (props) => {  
   const a= useContext(NoteContext)
-    console.log("a.id",a.id)
   const [like, setLike] = useState(false)
   const [modal, setModal] = useState(false)
   const [num, setnum] = useState(props.likes.length)
