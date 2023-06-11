@@ -6,11 +6,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useContext } from 'react';
-
+import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
 import NoteContext from '../context/noteContext';
 import {useState,useEffect} from "react"
 
 import "./fri.css"
+import CommentsModal from './Comments/CommentsModal';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -68,6 +69,15 @@ var result = date.toLocaleDateString('en', options);
     }
       
   }, [])
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   // useEffect(() => {
   //   Axios.get(`http://localhost:5000/likes/${props.id}/${a.id}`).then((response)=>{
@@ -83,6 +93,9 @@ var result = date.toLocaleDateString('en', options);
   return (
     <Card elevation={3} sx={{ alignSelf:"center",mr:"auto",ml:"auto", maxWidth:{xs:"95%",sm:"75%"}, minWidth:{xs:"95%",sm:"75%"},alignSelf:"center",mb:1,mt:2,borderRadius:"10px"}}>
       <CardHeader
+             sx={{":hover":{
+              cursor:"default"
+             }}}
         avatar={
           <Avatar  sx={{width:"50px",height:"50px" ,bgcolor: red[500] }} alt={props.name[0]} src={props.imgAvatar}>
            
@@ -148,6 +161,13 @@ var result = date.toLocaleDateString('en', options);
          }
         </IconButton>
         <Typography variant="body1" color="text.primary" sx={{alignSelf:"center"}}>{props.displayLikes? props.displayLikes :props.likes.length}</Typography>
+        <Box sx={{ml:"auto", display:"flex",justifyContent:"center",alignItems:"center"}} >
+        <IconButton onClick={handleClickOpen}>
+           <CommentRoundedIcon/>
+        </IconButton>
+         <Typography variant="body2" color="text.primary" sx={{alignSelf:"center"}}>{`comments`}</Typography>
+        </Box>
+        <CommentsModal userId={props.userId} postId={props.id} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} ></CommentsModal>
         </CardActions>
         </Card>
         
