@@ -56,7 +56,11 @@ const MyPosts = () => {
   const onDelete = (id) => {
 
     console.log("delete my posts", id)
-    Axios.delete(`https://nice-plum-panda-tam.cyclic.app/deletePost/${id}/${a.id}`).then((response) => {
+    Axios.delete(`http://localhost:5000/deletePost/${id}/${a.id}`, {
+      headers: {
+        Authorization: a.token
+      }
+    }).then((response) => {
       alert("post deleted")
 
       setData(data.filter((val) => {

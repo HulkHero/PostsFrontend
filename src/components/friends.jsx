@@ -22,7 +22,7 @@ export default function AlignItemsList() {
  
     useEffect(() => {
       if(a.id){ 
-        dispatch(fetchFriends(a.id));
+        dispatch(fetchFriends({id:a.id,authtoken:a.token}));
       }
     //  setText("Loading...")
     // Axios.get( `https://nice-plum-panda-tam.cyclic.app/myFriends/${a.id}`).then((res) => {
