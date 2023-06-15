@@ -69,7 +69,7 @@ const fetchFriends = createAsyncThunk(
     "friend/fetchFriends",
     async (prop, authtoken) => {
         console.log("token", authtoken)
-        const res = await axios.get(`http://localhost:5000/myFriends/${prop.id}`, {
+        const res = await axios.get(`https://nice-plum-panda-tam.cyclic.app/myFriends/${prop.id}`, {
             headers: {
                 Authorization: prop.authtoken
             }

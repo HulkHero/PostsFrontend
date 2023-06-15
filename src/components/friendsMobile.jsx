@@ -15,6 +15,9 @@ import "./fri.css"
 import FriendItem from './frienditem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { setFriends,fetchFriends } from '../store';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 export default function FriendsMobile() {
   const [open, setOpen] = React.useState(true);
 
@@ -23,34 +26,17 @@ export default function FriendsMobile() {
   };
 
    const a= useContext(NoteContext);
-  const [data, setData] = useState([]);
-    const [text, setText] = useState("");
-    useEffect(() => {
-      if(a.id){
-    // Axios.get(`https://nice-plum-panda-tam.cyclic.app/showFriends/${a.id}`).then((res) => {
-    //   console.log(res,"hellllll");
-    //   setAvatar(res.data.img)
-    //   console.log(res.data.img,"her")
-    //  setData(res.data.user.friends);
-    // }) } 
-     setText("Loading...")
-    Axios.get( `https://nice-plum-panda-tam.cyclic.app/myFriends/${a.id}`).then((res) => {
-      console.log("resFriends",res)
-      if(res.data=="error2"){
+   const dispatch = useDispatch();
+ 
+   useEffect(() => {
+     if(a.id){ 
+       dispatch(fetchFriends({id:a.id,authtoken:a.token}));
+     }
+   }, [a.id])
+    const dataRedux= useSelector((state) => state.friend.value);
+    const loading= useSelector((state) => state.friend.loading);
+    const text= useSelector((state) => state.friend.text);
 
-       setText("No Friends")
-       
-      }
-      else{
-        setData(res.data);
-      }
-    
-    }
-      ).catch((err) => {
-        setText("No Friends")
-        console.log(err)})
-      }
-    }, [a.id])
   return (
     <> 
     <div style={{minWidth:"95%",maxWidth:"100%",}}>
@@ -70,7 +56,7 @@ export default function FriendsMobile() {
     </ListItem>
     <Divider variant='middle '></Divider>
     <Collapse in={open} timeout="auto" unmountOnExit>
-    {data.length>0 ? data.map((element,index)=>{
+    {dataRedux.length>0 ? dataRedux.map((element,index)=>{
           // let img12= avatar[index]
           // console.log(img12,"img12")
           const base64= btoa(new Uint8Array(element.avatar.data.data).reduce(function (data, byte) {
@@ -84,7 +70,8 @@ export default function FriendsMobile() {
      </>)
     })
     
-    :<Typography sx={{ml:"20px"}}>{text}</Typography>
+    : <>{loading? <Typography sx={{ml:"20px"}}>{text}</Typography>:<Typography sx={{ml:"20px"}}>No Friends</Typography>
+  }</>
     }
     </Collapse>
     </List>

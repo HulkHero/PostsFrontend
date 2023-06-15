@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useDispatch,useSelector } from 'react-redux';
 import { addData ,concatData, like,dislike,fetchMoreData,setSkip, RefreshAllData, fetchFirstData,setsavedScroll} from '../store';
 import {store} from "../store";
+import CardSkeleton from './Skeleton';
 
 const CardContainer = () => {
 
@@ -135,11 +136,7 @@ const CardContainer = () => {
      scrollThreshold={0.7}
       // scrollY={CurrentScroll}
      loader={ 
-      <div style={{ display: 'flex',justifyContent:"center" }}>
-      <Box sx={{ display: 'flex',justifyContent:"center"}}>
-       <h4>Loading...</h4>
-    </Box>
-    </div>
+      <CardSkeleton></CardSkeleton>
     }
     //  <h4>loading...</h4>
      endMessage={

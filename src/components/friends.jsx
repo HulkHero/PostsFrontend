@@ -24,27 +24,12 @@ export default function AlignItemsList() {
       if(a.id){ 
         dispatch(fetchFriends({id:a.id,authtoken:a.token}));
       }
-    //  setText("Loading...")
-    // Axios.get( `https://nice-plum-panda-tam.cyclic.app/myFriends/${a.id}`).then((res) => {
-    //   console.log("resFriends",res)
-    //   if(res.data=="error2"){
-    //    setText("No Friends")
-    //   }
-    //   else{
-    //     setData(res.data)
-    //     dispatch(setFriends(res.data))
-    //   }
-    // }
-    //   ).catch((err) => {
-    //     setText("No Friends")
-    //     console.log(err)})
-    //   }
     }, [a.id])
     
     const dataRedux= useSelector((state) => state.friend.value);
     const loading= useSelector((state) => state.friend.loading);
     const text= useSelector((state) => state.friend.text);
-    console.log(dataRedux,"dataRedux")
+
   return (
     <> 
     <Card style={{minWidth:"100%",zIndex:"10000",minHeight:"100vh"}}>

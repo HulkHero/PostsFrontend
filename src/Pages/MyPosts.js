@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from 'react'
 import Cards from '../components/Cards';
 import Axios from "axios";
 import NoteContext from '../context/noteContext'
+import CardSkeleton from '../components/Skeleton';
 
 const MyPosts = () => {
   const a = useContext(NoteContext)
@@ -56,7 +57,7 @@ const MyPosts = () => {
   const onDelete = (id) => {
 
     console.log("delete my posts", id)
-    Axios.delete(`http://localhost:5000/deletePost/${id}/${a.id}`, {
+    Axios.delete(`https://nice-plum-panda-tam.cyclic.app/deletePost/${id}/${a.id}`, {
       headers: {
         Authorization: a.token
       }
@@ -121,7 +122,7 @@ const MyPosts = () => {
           )
 
         })
-          : <Typography sx={{ ml: "auto", mr: "auto" }}>{text} </Typography>
+          : <> <CardSkeleton></CardSkeleton> <CardSkeleton></CardSkeleton></>
         }
 
 
