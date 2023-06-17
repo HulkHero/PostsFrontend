@@ -1,6 +1,6 @@
-import { Avatar, Divider, IconButton, ListItem, ListItemAvatar, ListItemButton, ListItemText, Menu, MenuItem,Button } from '@mui/material'
-import React,{useState,useEffect} from 'react'
-import Axios from "axios"
+import { Avatar, Divider, IconButton, ListItem, ListItemAvatar, ListItemText, Menu,Button } from '@mui/material'
+import React,{useState} from 'react'
+
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 const FriendItem = (props) => {
      const [show, setShow] = useState(false);

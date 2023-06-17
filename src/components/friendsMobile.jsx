@@ -2,20 +2,16 @@ import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Card from '@mui/material/Card';
-import { Collapse, IconButton, ListItemButton, ListItemIcon } from '@mui/material';
+import { Collapse, IconButton,} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Axios from "axios";
 import NoteContext from "../context/noteContext";
-import {useState ,useEffect,useContext} from "react";
+import {useEffect,useContext} from "react";
 import "./fri.css"
 import FriendItem from './frienditem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { setFriends,fetchFriends ,deleteFriend} from '../store';
+import { fetchFriends ,deleteFriend} from '../store';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 export default function FriendsMobile() {

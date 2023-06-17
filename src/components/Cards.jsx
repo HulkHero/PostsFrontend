@@ -52,14 +52,12 @@ const Cards = (props) => {
   const a= useContext(NoteContext)
   const [like, setLike] = useState(false)
   const [modal, setModal] = useState(false)
-  const [num, setnum] = useState(props.likes.length)
   const [animate, setAnimate] = useState(false)
  // const base64= btoa(String.fromCharCode(...new Uint8Array(props.image)));
   var date = new Date(props.date);
   var options = {
     year: 'numeric', month: 'numeric', day: 'numeric',
 };
-let likess
 var result = date.toLocaleDateString('en', options);
 
    const theme=useTheme();
@@ -68,7 +66,7 @@ var result = date.toLocaleDateString('en', options);
       setLike(true)
     }
       
-  }, [])
+  }, [a.id])
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -78,20 +76,11 @@ var result = date.toLocaleDateString('en', options);
     setOpen(false);
   };
 
-
-  // useEffect(() => {
-  //   Axios.get(`http://localhost:5000/likes/${props.id}/${a.id}`).then((response)=>{
-          
-      
-  //   })
-
-
-  // }, [num])
   
   
 
   return (
-    <Card elevation={3} sx={{ alignSelf:"center",mr:"auto",ml:"auto", maxWidth:{xs:"95%",sm:"75%"}, minWidth:{xs:"95%",sm:"75%"},alignSelf:"center",mb:1,mt:2,borderRadius:"10px"}}>
+    <Card elevation={3} sx={{ mr:"auto",ml:"auto", maxWidth:{xs:"95%",sm:"75%"}, minWidth:{xs:"95%",sm:"75%"},alignSelf:"center",mb:1,mt:2,borderRadius:"10px"}}>
       <CardHeader
              sx={{":hover":{
               cursor:"default"
@@ -102,7 +91,7 @@ var result = date.toLocaleDateString('en', options);
           </Avatar>
         }
         action={
-          props.isMyPosts==true? 
+          props.isMyPosts===true? 
           <IconButton onClick={()=>{props.onDelete(props.id)}}>
            <DeleteIcon  ></DeleteIcon>
           </IconButton>:
@@ -127,7 +116,7 @@ var result = date.toLocaleDateString('en', options);
       >
         <Fade in={modal}>
           <Box sx={style}>
-           <img src={props.image} style={{height:"500px",width:"650px"}}>
+           <img src={props.image} alt='img' style={{height:"500px",width:"650px"}}>
            </img>
           </Box>
         </Fade>

@@ -2,14 +2,12 @@ import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
+
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Axios from "axios";
 import NoteContext from "../context/noteContext";
-import {useState ,useEffect,useContext} from "react";
+import {useEffect,useContext} from "react";
 import "./fri.css"
 import FriendItem from './frienditem';
 import { fetchFriends,deleteFriend } from '../store';

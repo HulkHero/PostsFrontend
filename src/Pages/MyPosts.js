@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Paper, Button, Typography } from "@mui/material"
+import { Paper, } from "@mui/material"
 import { useState, useEffect, useContext } from 'react'
 import Cards from '../components/Cards';
 import Axios from "axios";
@@ -35,19 +35,19 @@ const MyPosts = () => {
         'Authorization': a.token
       }
     }).then((response) => {
-      if (response.status == 400) {
+      if (response.status === 400) {
         alert("you are not authorized")
         setText("You have not posted anything")
       }
       else {
         setData(response.data);
         console.log("return my posts", response.data)
+        if (response.data.length == 0) {
+          setText("you have not posted anything")
+
+        }
 
       }
-
-
-
-
     }).catch(response => {
       setText("you have not posted anything")
     })
@@ -65,7 +65,7 @@ const MyPosts = () => {
       alert("post deleted")
 
       setData(data.filter((val) => {
-        return val._id != id;
+        return val._id !== id;
       }))
     }
 
@@ -92,6 +92,13 @@ const MyPosts = () => {
     else { console.log("login first") }
 
 
+  }
+  if (text == "you have not posted anything") {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "5vh" }}>
+        <h4>{text}</h4>
+      </div>
+    )
   }
 
 

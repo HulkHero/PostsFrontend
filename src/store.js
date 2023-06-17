@@ -1,6 +1,6 @@
 import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { produce } from 'immer';
+
 
 const dataSlice = createSlice({
     name: "data",
