@@ -68,7 +68,7 @@ const friendInitialState = { value: {}, loading: false, text: "", error: "" }
 const fetchFriends = createAsyncThunk(
     "friend/fetchFriends",
     async (prop, authtoken) => {
-        console.log("token", authtoken)
+
         const res = await axios.get(`https://nice-plum-panda-tam.cyclic.app/myFriends/${prop.id}`, {
             headers: {
                 Authorization: prop.authtoken
@@ -87,6 +87,10 @@ const friendSlice = createSlice({
     reducers: {
         setFriends: (state, action) => {
             state.value = action.payload
+        },
+        deleteFriend: (state, action) => {
+            state.value = state.value.filter((val, index) => index != action.payload.index)
+            //state.value = state.value.filter((val) => val._id != action.payload)
         }
     },
     extraReducers: (builder) => {
@@ -113,7 +117,7 @@ const friendSlice = createSlice({
 })
 
 export { fetchFriends }
-export const { setFriends } = friendSlice.actions;
+export const { setFriends, deleteFriend } = friendSlice.actions;
 export const store = configureStore({
     reducer: {
         data: dataSlice.reducer,

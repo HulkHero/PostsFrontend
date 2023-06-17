@@ -1,5 +1,5 @@
 import React,{memo} from 'react'
-import { Card,CardHeader,Avatar,CardMedia,CardContent,Typography,CardActions,IconButton, Container, CardActionArea,Modal,Backdrop,Box,Fade,styled } from '@mui/material';
+import { Card,CardHeader,Avatar,CardMedia,CardContent,Typography,CardActions,IconButton, Container, CardActionArea,Modal,Backdrop,Box,Fade,styled ,Button} from '@mui/material';
 import {red} from"@mui/material/colors";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -9,7 +9,7 @@ import { useContext } from 'react';
 import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
 import NoteContext from '../context/noteContext';
 import {useState,useEffect} from "react"
-
+import { useTheme } from '@mui/material';
 import "./fri.css"
 import CommentsModal from './Comments/CommentsModal';
 const style = {
@@ -62,7 +62,7 @@ const Cards = (props) => {
 let likess
 var result = date.toLocaleDateString('en', options);
 
-
+   const theme=useTheme();
   useEffect(() => {
     if (props.likes?.includes(a.id)){
       setLike(true)
@@ -162,12 +162,13 @@ var result = date.toLocaleDateString('en', options);
         </IconButton>
         <Typography variant="body1" color="text.primary" sx={{alignSelf:"center"}}>{props.displayLikes? props.displayLikes :props.likes.length}</Typography>
         <Box sx={{ml:"auto", display:"flex",justifyContent:"center",alignItems:"center"}} >
-        <IconButton onClick={handleClickOpen}>
-           <CommentRoundedIcon/>
-        </IconButton>
-         <Typography variant="body2" color="text.primary" sx={{alignSelf:"center"}}>{`comments`}</Typography>
+        {/* <IconButton onClick={handleClickOpen}> */}
+           {/* <CommentRoundedIcon/> */}
+        {/* </IconButton> */}
+         <Button variant="text" onClick={handleClickOpen} sx={{color:`${theme.palette.grey[700]}`,textDecoration:"none"}} disableElevation={true} disableFocusRipple={true}    startIcon={<CommentRoundedIcon/>}>Comments</Button>
+         {/* <Typography variant="body2" color="text.primary" sx={{alignSelf:"center"}}>{`comments`}</Typography> */}
         </Box>
-        <CommentsModal userId={props.userId} postId={props.id} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} ></CommentsModal>
+        <CommentsModal  userId={props.userId} postId={props.id} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} ></CommentsModal>
         </CardActions>
         </Card>
         

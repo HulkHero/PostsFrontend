@@ -12,7 +12,7 @@ import NoteContext from "../context/noteContext";
 import {useState ,useEffect,useContext} from "react";
 import "./fri.css"
 import FriendItem from './frienditem';
-import { setFriends,fetchFriends } from '../store';
+import { fetchFriends,deleteFriend } from '../store';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 export default function AlignItemsList() {
@@ -21,14 +21,31 @@ export default function AlignItemsList() {
     const dispatch = useDispatch();
  
     useEffect(() => {
-      if(a.id){ 
+      if(a.id && a.token){ 
         dispatch(fetchFriends({id:a.id,authtoken:a.token}));
       }
     }, [a.id])
+
+    const DeleteFriend=async (id,index)=>{
+     
+      console.log("inside sdas friend",index)
+      dispatch(deleteFriend({id:id,index:index}));
+
+      try{
+        const res= await Axios.delete(`https://nice-plum-panda-tam.cyclic.app/deleteFriend/${a.id}/${id}`,{headers:{"Authorization":a.token}})
+        if(res.status===200){
+        //  dispatch(fetchFriends({id:a.id,authtoken:a.token}));
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
     
     const dataRedux= useSelector((state) => state.friend.value);
     const loading= useSelector((state) => state.friend.loading);
     const text= useSelector((state) => state.friend.text);
+
+
 
   return (
     <> 
@@ -51,7 +68,7 @@ export default function AlignItemsList() {
         const img=`data:image/png;base64,${base64}`
      return(
       <>
-       <FriendItem key={index}  props={element} img={img} id={a.id} ></FriendItem>
+       <FriendItem key={index} index={index} DeleteFriend={DeleteFriend}  props={element} img={img} id={a.id} ></FriendItem>
      </>)
     })
     : <>{loading? <Typography sx={{ml:"20px"}}>{text}</Typography>:<Typography sx={{ml:"20px"}}>No Friends</Typography>

@@ -15,7 +15,7 @@ import "./fri.css"
 import FriendItem from './frienditem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { setFriends,fetchFriends } from '../store';
+import { setFriends,fetchFriends ,deleteFriend} from '../store';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 export default function FriendsMobile() {
@@ -33,6 +33,21 @@ export default function FriendsMobile() {
        dispatch(fetchFriends({id:a.id,authtoken:a.token}));
      }
    }, [a.id])
+
+   const DeleteFriend=async (id,index)=>{
+     
+    console.log("inside sdas friend",index)
+    dispatch(deleteFriend({id:id,index:index}));
+
+    try{
+      const res= await Axios.delete(`https://nice-plum-panda-tam.cyclic.app/deleteFriend/${a.id}/${id}`,{headers:{"Authorization":a.token}})
+      if(res.status===200){
+      //  dispatch(fetchFriends({id:a.id,authtoken:a.token}));
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
     const dataRedux= useSelector((state) => state.friend.value);
     const loading= useSelector((state) => state.friend.loading);
     const text= useSelector((state) => state.friend.text);
@@ -66,7 +81,7 @@ export default function FriendsMobile() {
         const img=`data:image/png;base64,${base64}`
      return(
       <>
-       <FriendItem  props={element} img={img} id={a.id} ></FriendItem>
+       <FriendItem key={index}  props={element} index={index} DeleteFriend={DeleteFriend} img={img} id={a.id} ></FriendItem>
      </>)
     })
     
