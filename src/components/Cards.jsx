@@ -59,7 +59,6 @@ const Cards = (props) => {
     year: 'numeric', month: 'numeric', day: 'numeric',
 };
 var result = date.toLocaleDateString('en', options);
-
    const theme=useTheme();
   useEffect(() => {
     if (props.likes?.includes(a.id)){
@@ -154,7 +153,7 @@ var result = date.toLocaleDateString('en', options);
         {/* <IconButton onClick={handleClickOpen}> */}
            {/* <CommentRoundedIcon/> */}
         {/* </IconButton> */}
-         <Button variant="text" disabled={!props.allowComments} onClick={handleClickOpen} sx={{color:`${theme.palette.grey[700]}`,textDecoration:"none"}} disableElevation={true} disableFocusRipple={true}    startIcon={<CommentRoundedIcon/>}>Comments</Button>
+         <Button variant="text" disabled={!props.allowComments[0]} onClick={handleClickOpen} sx={{color:`${theme.palette.grey[700]}`,textDecoration:"none"}} disableElevation={true} disableFocusRipple={true}    startIcon={<CommentRoundedIcon/>}>Comments</Button>
          {/* <Typography variant="body2" color="text.primary" sx={{alignSelf:"center"}}>{`comments`}</Typography> */}
         </Box>
         <CommentsModal  userId={props.userId} postId={props.id} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} ></CommentsModal>
