@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CssBaseline } from '@mui/material';
@@ -10,7 +9,6 @@ import AddPosts from "./Pages/AddPosts";
 import SignIn from "./Pages/Signin";
 import NoteContext from './context/noteContext';
 import Signup from './Pages/Signup';
-
 import FriendsHome from './Pages/FriendsHome';
 import Profile from './Pages/Profile';
 function App() {
@@ -35,12 +33,7 @@ function App() {
     else {
       setIslogged(false)
     }
-
-
-
   }, [a])
-
-
 
   return (
     <>
@@ -48,15 +41,9 @@ function App() {
 
         <Router>
           <CssBaseline />
-
           {islogged == true ?
-
             <> <NavBar></NavBar>
-
               <Routes>
-
-
-
                 <Route path='/posts' element={<Home />} ></Route>
                 <Route path='addposts' element={<AddPosts />}></Route>
                 <Route path='myPosts' element={<Profile />}></Route>
@@ -67,9 +54,7 @@ function App() {
             <Route exact path='/' element={<SignIn />}></Route>
             <Route exact path='signup' element={<Signup />} />
           </Routes>
-
         </Router>
-
       </ThemeProvider>
 
     </>

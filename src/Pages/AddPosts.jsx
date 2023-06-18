@@ -1,7 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import { useState,useContext,useRef,useEffect } from 'react';
-import { Button, TextField ,Grid, Snackbar, Alert,styled,IconButton} from '@mui/material';
+import { Button, TextField ,Grid, Snackbar, Alert,styled,IconButton,Switch, Typography} from '@mui/material';
 import NoteContext from "../context/noteContext"
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -65,6 +65,7 @@ const AddPosts = () => {
     caption:"",
     _id:a.id,
     creatername:a.creatername,
+    allowComment:true,
     
   });
   const [openSnack, setOpenSnack] = useState(false)
@@ -85,6 +86,12 @@ const AddPosts = () => {
     };
     fileReader.readAsDataURL(file);
   }, [file]);
+   const [checked, setChecked] = React.useState(true);
+
+  // const handleChange = (event) => {
+  //   setChecked(event.target.checked);
+  // };
+
 
   const pickedHandler = event => {
     let pickedFile;
@@ -117,6 +124,14 @@ const AddPosts = () => {
     }))
   }
 
+  const handleToggle=()=>{
+    console.log("toggle",user.allowComment)
+    setUser((prev)=>({
+      ...prev,
+      allowComment:!prev.allowComment
+    }))
+  }
+
  const onSubmit=(e)=>{
    e.preventDefault();
   setLoader(true)
@@ -126,6 +141,7 @@ const AddPosts = () => {
   formData.append("caption",user.caption)
   formData.append("id",user._id)
   formData.append("creatername",user.creatername)
+  formData.append("allowComment",user.allowComment)
   file?formData.append("image",file):console.log("no image");
   console.log(formData)
   for (var key of formData.entries()) {
@@ -144,8 +160,8 @@ const AddPosts = () => {
      
   }
   return (
-    <div style={{backgroundColor:"#f0f2f5",minHeight:"90vh",display:"flex",justifyContent:"center"}}>
-    <Grid container   sx={{ maxWidth:{xs:"90%",sm:"45%"},maxHeight:"50vh", display: 'flex',justifyContent: 'center', mt:"20px",backgroundColor:"#ffffff",borderRadius:"40px"} }>
+    <div style={{backgroundColor:"#f0f2f5",minHeight:"95vh",display:"flex",justifyContent:"center"}}>
+    <Grid container   sx={{ maxWidth:{xs:"90%",sm:"45%"},maxHeight:"55vh", display: 'flex',justifyContent: 'center', mt:"20px",backgroundColor:"#ffffff",borderRadius:"40px"} }>
       <form onSubmit={(e)=>onSubmit(e)}>
       <Grid item xs={12} ><CssTextField type="heading" label="heading" value={user.heading} name="heading" id="outlined-basic"  onChange={(e)=>handleChange(e)}
       sx={{ ':hover':{
@@ -153,7 +169,7 @@ const AddPosts = () => {
         borderRadius: "50px",
       }, marginTop:"2.4rem"}}
       ></CssTextField>
-      <Grid item xs={12}><CssTextField label="caption" type="caption" value={user.caption} name="caption" id="outlined-basic" onChange={(e)=>handleChange(e)}></CssTextField></Grid>
+      <Grid item xs={12} sx={{mb:2}}><CssTextField label="caption" type="caption" value={user.caption} name="caption" id="outlined-basic" onChange={(e)=>handleChange(e)}></CssTextField></Grid>
       </Grid> 
           <Grid item xs={12}>
           <input
@@ -164,16 +180,20 @@ const AddPosts = () => {
         accept=".jpg,.png,.jpeg"
         onChange={pickedHandler}
       />
-      <div style={{maxWidth:"200px",maxHeight:"300px"}}>
+      <div style={{maxWidth:"200px",maxHeight:"300px",marginLeft:"auto",marginRight:"auto",marginTop:2}}>
           {previewUrl && <img src={previewUrl} style={{maxWidth:"200px",maxHeight:"300px"}} alt="Preview" />}
-          {!previewUrl && <p>Please pick an image.</p>}
+          {/* {!previewUrl && <p>Please pick an image.</p>} */}
         </div>
-         <Button variant="contained" startIcon={<AddAPhotoRoundedIcon />} sx={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}  type="button" onClick={pickImageHandler}>
+         <Button variant="contained" startIcon={<AddAPhotoRoundedIcon />} sx={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center",mt:2}}  type="button" onClick={pickImageHandler}>
           
          </Button>
           </Grid>
+      
+     <Grid xs={12} sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}} > 
+     <Typography sx={{mt:2,mb:1}}>Allow Comments</Typography>
+     <Switch sx={{mt:1}} checked={user.allowComment} onChange={handleToggle} size='medium' label="Allow Comment" labelPosition="start" inputProps={{ 'aria-label': 'controlled' }}/></Grid>
 
-      <Grid item xs={12} sx={{display:"flex",flexDirection:"row"}}><LoadingButton loading={loader} variant="contained" type="submit" sx={{alignSelf:"flex-end",marginLeft:"auto",mt:"20px",width:"100%"}}>Post</LoadingButton></Grid>
+      <Grid item xs={12} gutterBottom sx={{display:"flex",flexDirection:"row"}}><LoadingButton loading={loader} variant="contained" type="submit" sx={{alignSelf:"flex-end",marginLeft:"auto",mt:2,width:"100%",maxHeight:"32px"}}>Post</LoadingButton></Grid>
       </form>
       <Snackbar open={openSnack} autoHideDuration={4000} onClose={()=>setOpenSnack(false)}>
   <Alert onClose={()=>{setOpenSnack(false)}} severity="success" variant="filled" sx={{ width: '100%' }}>

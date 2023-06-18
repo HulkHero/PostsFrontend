@@ -105,7 +105,7 @@ const MyPosts = () => {
   return (
     <>
 
-      <Paper evaluation={2} style={{ minWidth: "100%", display: "flex:", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "90vh", backgroundColor: "whitesmoke" }} spacing={2}>
+      <Paper evaluation={2} style={{ minWidth: "100%", display: "flex:", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "95vh", backgroundColor: "whitesmoke" }} spacing={2}>
 
         {data.length > 0 ? data.map((element) => {
           let base64 = null;
