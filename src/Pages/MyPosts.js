@@ -123,7 +123,7 @@ const MyPosts = () => {
           return (
             <>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: "center" }}>
-                <Cards key={element._id} id={element._id} ondislike={ondislike} userId={a.id} likes={element.likes} name={element.creatername} date={element.date} image={img} heading={element.heading} caption={element.caption} onlike={onlike} displayLike={lik} onDelete={onDelete} isMyPosts={true} ></Cards>
+                <Cards key={element._id} id={element._id} ondislike={ondislike} userId={a.id} likes={element.likes} name={element.creatername} date={element.date} image={img} heading={element.heading} allowComments={element.allowComments} caption={element.caption} onlike={onlike} displayLike={lik} onDelete={onDelete} isMyPosts={true} ></Cards>
               </div>
             </>
           )

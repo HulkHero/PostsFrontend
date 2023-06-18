@@ -191,7 +191,7 @@ const AddPosts = () => {
       
      <Grid xs={12} sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}} > 
      <Typography sx={{mt:2,mb:1}}>Allow Comments</Typography>
-     <Switch sx={{mt:1}} checked={user.allowComment} onChange={handleToggle} size='medium' label="Allow Comment" labelPosition="start" inputProps={{ 'aria-label': 'controlled' }}/></Grid>
+     <Switch sx={{mt:1}} checked={user.allowComment} onChange={handleToggle} size='medium'  inputProps={{ 'aria-label': 'controlled' }}/></Grid>
 
       <Grid item xs={12} gutterBottom sx={{display:"flex",flexDirection:"row"}}><LoadingButton loading={loader} variant="contained" type="submit" sx={{alignSelf:"flex-end",marginLeft:"auto",mt:2,width:"100%",maxHeight:"32px"}}>Post</LoadingButton></Grid>
       </form>

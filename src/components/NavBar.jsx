@@ -1,13 +1,11 @@
 import React,{useContext} from 'react'
-import {AppBar,Tabs,Tab,Box,Drawer,Grid,Typography, Tooltip,Avatar,Menu,MenuItem,ListItemIcon, ListItemButton,SwipeableDrawer} from '@mui/material'
-import {Link} from 'react-router-dom'
+import {AppBar,Tabs,Tab,Box,Drawer,Grid,Typography, Tooltip,Avatar,Menu,ListItemIcon, ListItemButton,SwipeableDrawer} from '@mui/material'
+import {Link,useLocation} from 'react-router-dom'
 import Toolbar from '@mui/material/Toolbar';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
  import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import theme from '../Theme';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
@@ -22,6 +20,8 @@ import "./nav.css"
 import SearchIcon from '@mui/icons-material/Search';
 import NoteContext from '../context/noteContext'
 import Logout from "@mui/icons-material/Logout"
+import { RefreshAllData } from '../store';
+import { useDispatch } from 'react-redux';
 const Head=styled("Box")(({theme})=>({
  // position:"relative",
   //height:"auto",
@@ -102,26 +102,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 const NavBar = () => {
   const a= useContext(NoteContext)
-  // if (a.token)
-  // {}
-  // else{
-  //   const getToken=sessionStorage.getItem("token");
-   
-  //     const getid=sessionStorage.getItem("id");
-  //     const getcreatername=sessionStorage.getItem("creatername");
-  //     const avatar=sessionStorage.getItem("avatar");
-  //   if(getToken!==null){
-  //     a.setToken(getToken)
-  //     a.setId(getid)
-  //     a.setcreatername(getcreatername)
-  //     a.setavatar(avatar);
-  //   }
-  // }
+  const location = useLocation();
 
+  const dispatch = useDispatch();
 
   window.onscroll = function() {scrollFunction()};
 
-  
+  const handleHome=()=>{
+    
+    if(location.pathname=="/posts"){
+      dispatch(RefreshAllData());
+    }
+  }
 
   
 function scrollFunction() {
@@ -196,7 +188,7 @@ function scrollFunction() {
         <Tab sx={{'& .MuiSvgIcon-root':{
           fontSize:"xx large",
         },
-        color:"#FFFFFF"}} icon={line===0? <Tooltip title="Home"><HomeIcon/></Tooltip> :< Tooltip title="Home"><HomeOutlinedIcon/></Tooltip>} to="/posts" component={Link}  >
+        color:"#FFFFFF"}} icon={line===0? <Tooltip title="Home"><HomeIcon/></Tooltip> :< Tooltip title="Home"><HomeOutlinedIcon/></Tooltip>} to="/posts" onClick={handleHome} component={Link}  >
         </Tab>
         <Tab sx={{'& .MuiSvgIcon-root':{
           fontSize:"xx large",
