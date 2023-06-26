@@ -17,6 +17,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Axios from 'axios';
 import { Snackbar, Alert, CircularProgress } from '@mui/material';
 import { useTheme } from "@mui/material"
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { SignupSchema } from '../Validations/Signup.validation';
 
 
 export default function SignUp() {
@@ -24,41 +26,35 @@ export default function SignUp() {
   const [errorMail, setErrorMail] = useState(false)
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const initialValues = {
+    name: "",
+    email: "",
+    password: ""
+  }
   const navigate = useNavigate();
 
   const handleClose = () => {
     setOpen(false)
   }
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (values, props) => {
     setLoading(true)
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    if (data.get('email').includes("@gmail.com")) {
-      await Axios.post("https://nice-plum-panda-tam.cyclic.app/signup", {
-        name: data.get('name'),
-        email: data.get('email'),
-        password: data.get('password'),
+    console.log(values)
+    console.log(props)
+    await Axios.post("https://nice-plum-panda-tam.cyclic.app/signup", {
+      name: values.name,
+      email: values.email,
+      password: values.password,
 
-      }).then((response) => {
-        console.log(response)
-        setOpen(true)
-        setLoading(false)
-
-        // console.log(response.data.token)
-        // a.setToken(response.data.token)
-
-      });
-    }
-    else {
-      alert("invalid input")
-      setErrorMail("true")
+    }).then((response) => {
+      console.log(response)
+      setOpen(true)
       setLoading(false)
-    }
-    ;
+
+      // console.log(response.data.token)
+      // a.setToken(response.data.token)
+
+    });
+
   };
 
   return (
@@ -84,10 +80,12 @@ export default function SignUp() {
               Signed Up Successfully: Login Now
             </Alert>
           </Snackbar>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sx={{ mb: 2 }}>
-                <TextField
+          <Formik initialValues={initialValues} validationSchema={SignupSchema} onSubmit={handleSubmit} >
+            {({ errors, touched }) =>
+              <Form >
+                <Field
+                  sx={{ mb: 2, mt: 2 }}
+                  as={TextField}
                   autoComplete="given-name"
                   name="name"
                   required
@@ -95,25 +93,24 @@ export default function SignUp() {
                   id="firstName"
                   label="Name"
                   autoFocus
+                  error={touched.name && Boolean(errors.name)}
+                  helperText={<ErrorMessage name="name" />}
                 />
-              </Grid>
-
-
-
-              <Grid item xs={12} sx={{ flex: 1 }}>
-                <TextField
+                <Field
+                  sx={{ mb: 2 }}
+                  as={TextField}
                   required
                   fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  error={errorMail}
-                  helperText={errorMail ? "Must include @gmail.com" : " "}
+                  error={touched.email && Boolean(errors.email)}
+                  helperText={<ErrorMessage name="email" />}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
+                <Field
+                  sx={{ mb: 2 }}
+                  as={TextField}
                   required
                   fullWidth={true}
                   name="password"
@@ -121,18 +118,17 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  error={touched.password && Boolean(errors.password)}
+                  helperText={<ErrorMessage name="password" />}
                 />
-              </Grid>
-              <Grid item xs={12} sx={{ mt: 0, pt: 0 }}>
+
                 <Button
                   component={Link}
                   variant="text"
                   to="/"
-
+                  sx={{ mb: 2 }}
                 >Login</Button>
-              </Grid>
 
-              <Grid item xs={12} sx={{ minWidth: "100%" }}>
                 <Button
                   type="submit"
                   disabled={loading}
@@ -155,10 +151,11 @@ export default function SignUp() {
                     }}
                   />
                 )}
-              </Grid>
+              </Form>
 
-            </Grid>
-          </Box>
+            }
+
+          </Formik>
         </Box>
 
       </Container>

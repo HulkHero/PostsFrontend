@@ -67,14 +67,12 @@ const friendInitialState = { value: {}, loading: false, text: "", error: "" }
 
 const fetchFriends = createAsyncThunk(
     "friend/fetchFriends",
-    async (prop, authtoken) => {
-
+    async (prop) => {
         const res = await axios.get(`https://nice-plum-panda-tam.cyclic.app/myFriends/${prop.id}`, {
             headers: {
                 Authorization: prop.authtoken
             }
         })
-        console.log("inside fetch friends", res.data)
         return res.data
 
     }

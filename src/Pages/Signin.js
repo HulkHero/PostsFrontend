@@ -14,13 +14,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NoteContext from '../context/noteContext';
 import Axios from 'axios'
 import { Outlet } from "react-router-dom"
-import { Modal } from '@mui/material';
+import { FormControl, Modal } from '@mui/material';
 import { Snackbar } from '@mui/material'
 import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '@mui/system';
-
+import { Formik, ErrorMessage, Form, Field } from 'formik';
+import { SigninSchema } from '../Validations/Signin.validation';
 function setSessionToken(userToken, id, names, avatar) {
   sessionStorage.setItem('token', userToken);
   sessionStorage.setItem('id', id);
@@ -33,18 +34,25 @@ export default function SignIn() {
   const theme = useTheme()
   const a = useContext(NoteContext)
   const Navigate = useNavigate();
+  const initialValues = {
+    email: "",
+    password: ""
+  }
 
   const [openSnack, setOpenSnack] = useState(false)
 
   const [loading, setLoading] = useState(false)
-  const handleSubmit = (event) => {
+  const handleSubmit = (values, props) => {
     setLoading(true)
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    console.log(values)
+    console.log(props)
+
+
+    // const data = new FormData(event.currentTarget);
 
     Axios.post("https://nice-plum-panda-tam.cyclic.app/login", {
-      email: data.get('email'),
-      password: data.get('password')
+      email: values.email,
+      password: values.password
 
     }).then((response) => {
 
@@ -127,72 +135,79 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Link sx={{ textDecoration: 'none !important', textDecorationLine: "none" }} to='/signup'>Signup</Link>
-          <Box sx={{ m: 1, position: 'relative' }}>
-            <Button
-              type="submit"
-              disabled={loading}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            {loading && (
-              <CircularProgress
-                size={24}
-                sx={{
-                  // color: green[500],
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  marginTop: '-10px',
-                  marginLeft: '-12px',
-                }}
+        <Formik initialValues={initialValues} validationSchema={SigninSchema} onSubmit={handleSubmit}  >
+          {({ errors, touched }) =>
+            <Form >
+
+              <Field
+                as={TextField}
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                error={touched.email && Boolean(errors.email)}
+                helperText={<ErrorMessage name="email" />}
               />
-            )}
-            <Button
-              disabled={loading}
-              fullWidth
-              color="error"
-              variant="contained"
-              onClick={() => handleSubmit2()}
-              sx={{ mt: 1, mb: 2 }}>Login as Hammad</Button>
-          </Box>
-          <Grid container>
-            <Grid item xs>
 
-            </Grid>
-            <Grid item>
+              <Field
+                as={TextField}
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                error={touched.password && Boolean(errors.password)}
+                helperText={<ErrorMessage name="password" />}
 
-            </Grid>
-          </Grid>
-        </Box>
+              />
+              <Link sx={{ textDecoration: 'none !important', textDecorationLine: "none" }} to='/signup'>Signup</Link>
+              <Box sx={{ m: 1, position: 'relative' }}>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      // color: green[500],
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-10px',
+                      marginLeft: '-12px',
+                    }}
+                  />
+                )}
+                <Button
+                  disabled={loading}
+                  fullWidth
+                  color="error"
+                  variant="contained"
+                  onClick={() => handleSubmit2()}
+                  sx={{ mt: 1, mb: 2 }}>Login as Hammad</Button>
+              </Box>
+            </Form>
+
+          }
+        </Formik>
+
       </Box>
 
 
-    </Container>
+    </Container >
 
   );
 }
