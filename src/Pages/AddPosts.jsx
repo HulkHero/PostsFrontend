@@ -5,6 +5,8 @@ import { Button, TextField ,Grid, Snackbar, Alert,styled,IconButton,Switch, Typo
 import NoteContext from "../context/noteContext"
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { Formik,Form,Field ,ErrorMessage} from 'formik';
+import { AddPostValidation } from '../Validations/AddPostValidation';
 const CssTextField = styled(TextField)({
   maxWidth:"600px",
   marginTop:"20px",
@@ -68,6 +70,10 @@ const AddPosts = () => {
     allowComment:true,
     
   });
+  const initalValues={
+    heading:"",
+    caption:"",
+  }
   const [openSnack, setOpenSnack] = useState(false)
   
   const [previewUrl, setPreviewUrl] = useState();
@@ -132,13 +138,13 @@ const AddPosts = () => {
     }))
   }
 
- const onSubmit=(e)=>{
-   e.preventDefault();
+ const onSubmit=(props,values)=>{
+  
   setLoader(true)
   console.log("user",file)
   const formData= new FormData();
-  formData.append("heading",user.heading)
-  formData.append("caption",user.caption)
+  formData.append("heading",values.heading)
+  formData.append("caption",values.caption)
   formData.append("id",user._id)
   formData.append("creatername",user.creatername)
   formData.append("allowComment",user.allowComment)
@@ -152,6 +158,7 @@ const AddPosts = () => {
       console.log(response)
       setLoader(false)
       setOpenSnack(true)   
+      props.resetForm()
      })
   }
   else{
@@ -162,39 +169,54 @@ const AddPosts = () => {
   return (
     <div style={{backgroundColor:"#f0f2f5",minHeight:"95vh",display:"flex",justifyContent:"center"}}>
     <Grid container   sx={{ maxWidth:{xs:"90%",sm:"45%"},maxHeight:"55vh", display: 'flex',justifyContent: 'center', mt:"20px",backgroundColor:"#ffffff",borderRadius:"40px"} }>
-      <form onSubmit={(e)=>onSubmit(e)}>
-      <Grid item xs={12} ><CssTextField type="heading" label="heading" value={user.heading} name="heading" id="outlined-basic"  onChange={(e)=>handleChange(e)}
-      sx={{ ':hover':{
-        borderColor: "#cde8cc",
-        borderRadius: "50px",
-      }, marginTop:"2.4rem"}}
-      ></CssTextField>
-      <Grid item xs={12} sx={{mb:2}}><CssTextField label="caption" type="caption" value={user.caption} name="caption" id="outlined-basic" onChange={(e)=>handleChange(e)}></CssTextField></Grid>
-      </Grid> 
-          <Grid item xs={12}>
-          <input
-        
-        ref={filePickerRef}
-        style={{ display: 'none' }}
-        type="file"
-        accept=".jpg,.png,.jpeg"
-        onChange={pickedHandler}
-      />
-      <div style={{maxWidth:"200px",maxHeight:"300px",marginLeft:"auto",marginRight:"auto",marginTop:2}}>
-          {previewUrl && <img src={previewUrl} style={{maxWidth:"200px",maxHeight:"300px"}} alt="Preview" />}
-          {/* {!previewUrl && <p>Please pick an image.</p>} */}
-        </div>
-         <Button variant="contained" startIcon={<AddAPhotoRoundedIcon />} sx={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center",mt:2}}  type="button" onClick={pickImageHandler}>
-          
-         </Button>
-          </Grid>
+     <Formik  validationSchema={AddPostValidation} initialValues={initalValues} onSubmit={onSubmit} >
+     {(props)=>
+      <Form>
+           <Grid item xs={12} ><Field as={CssTextField}    label="heading"  name="heading" 
+            sx={{ ':hover':{
+              borderColor: "#cde8cc",
+              borderRadius: "50px",
+            }, marginTop:"2.4rem"}}
+            error={props.errors.heading && props.touched.heading}
+            helperText={<ErrorMessage name="heading" />}
+            ></Field>
+            </Grid> 
+            <Grid item xs={12} sx={{mb:2}}><Field as={CssTextField} label="caption" name="caption" 
+            error={props.errors.caption && props.touched.caption}
+            helperText={<ErrorMessage name="caption" ></ErrorMessage>} ></Field></Grid>
+           
+                <Grid item xs={12}>
+                <input
+              
+              ref={filePickerRef}
+              style={{ display: 'none' }}
+              type="file"
+              accept=".jpg,.png,.jpeg"
+              onChange={pickedHandler}
+            />
+            <div style={{maxWidth:"200px",maxHeight:"300px",marginLeft:"auto",marginRight:"auto",marginTop:2}}>
+                {previewUrl && <img src={previewUrl} style={{maxWidth:"200px",maxHeight:"300px"}} alt="Preview" />}
+                {/* {!previewUrl && <p>Please pick an image.</p>} */}
+              </div>
+               <Button variant="contained" startIcon={<AddAPhotoRoundedIcon />} sx={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center",mt:2}}  type="button" onClick={pickImageHandler}>
+                
+               </Button>
+                </Grid>
+            
+           <Grid xs={12} sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}} > 
+           <Typography sx={{mt:2,mb:1}}>Allow Comments</Typography>
+           <Switch sx={{mt:1}} checked={user.allowComment} onChange={handleToggle} size='medium'  inputProps={{ 'aria-label': 'controlled' }}/></Grid>
+<Grid item xs={12} gutterBottom sx={{display:"flex",flexDirection:"row"}}><LoadingButton loading={loader} variant="contained" type="submit" sx={{alignSelf:"flex-end",marginLeft:"auto",mt:2,width:"100%",maxHeight:"32px"}}>Post</LoadingButton></Grid>
       
-     <Grid xs={12} sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}} > 
-     <Typography sx={{mt:2,mb:1}}>Allow Comments</Typography>
-     <Switch sx={{mt:1}} checked={user.allowComment} onChange={handleToggle} size='medium'  inputProps={{ 'aria-label': 'controlled' }}/></Grid>
+        
+            </Form>
 
-      <Grid item xs={12} gutterBottom sx={{display:"flex",flexDirection:"row"}}><LoadingButton loading={loader} variant="contained" type="submit" sx={{alignSelf:"flex-end",marginLeft:"auto",mt:2,width:"100%",maxHeight:"32px"}}>Post</LoadingButton></Grid>
-      </form>
+
+
+     }
+     
+
+      </Formik> 
       <Snackbar open={openSnack} autoHideDuration={4000} onClose={()=>setOpenSnack(false)}>
   <Alert onClose={()=>{setOpenSnack(false)}} severity="success" variant="filled" sx={{ width: '100%' }}>
     Post Added
