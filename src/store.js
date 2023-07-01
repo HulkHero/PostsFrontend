@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const dataSlice = createSlice({
     name: "data",
-    initialState: { value: {}, skip: 0, fetchMore: true, firstFetch: true, savedScroll: 0 },
+    initialState: { value: {}, skip: 2, fetchMore: true, firstFetch: true, savedScroll: 0 },
     reducers: {
         setSkip: (state, action) => {
             state.skip = state.skip + 2

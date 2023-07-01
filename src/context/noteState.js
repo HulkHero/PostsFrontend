@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import NoteContext from "./noteContext";
-
+import { useQueryClient } from "@tanstack/react-query"
 const NoteState = (props) => {
     const [token, setToken] = useState("");
 
@@ -12,8 +12,10 @@ const NoteState = (props) => {
     const [avatar, setAvatar] = useState(null)
 
     console.log("inside context")
-
+    const queryClient = useQueryClient()
     const logout = () => {
+
+        queryClient.removeQueries("myposts")
 
         // const getStorageData = async () => {
         //     const token = await sessionStorage.getItem("token");

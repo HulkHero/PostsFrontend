@@ -5,14 +5,25 @@ import App from './App';
 import NoteState from './context/noteState';
 import { Provider } from 'react-redux';
 import { store } from "./store"
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
-  <NoteState>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </NoteState>
+  <QueryClientProvider client={queryClient}>
+    <NoteState>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </NoteState>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>
+
+
 
 );
 

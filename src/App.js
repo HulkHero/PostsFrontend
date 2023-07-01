@@ -11,6 +11,8 @@ import NoteContext from './context/noteContext';
 import Signup from './Pages/Signup';
 import FriendsHome from './Pages/FriendsHome';
 import Profile from './Pages/Profile';
+import NoteState from './context/noteState';
+
 function App() {
   const a = useContext(NoteContext)
   const [islogged, setIslogged] = useState(false);
@@ -37,8 +39,10 @@ function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
 
+
+
+      <ThemeProvider theme={theme}>
         <Router>
           <CssBaseline />
           {islogged == true ?
@@ -49,13 +53,15 @@ function App() {
                 <Route path='myPosts' element={<Profile />}></Route>
                 <Route path="addFriends" element={<FriendsHome />} />
               </Routes></>
-            : null}
-          <Routes>
-            <Route exact path='/' element={<SignIn />}></Route>
-            <Route exact path='signup' element={<Signup />} />
-          </Routes>
+            : <Routes>
+              <Route exact path='/' element={<SignIn />}></Route>
+              <Route exact path='signup' element={<Signup />} />
+            </Routes>}
+
         </Router>
       </ThemeProvider>
+
+
 
     </>
   );

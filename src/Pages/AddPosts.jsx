@@ -1,7 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import { useState,useContext,useRef,useEffect } from 'react';
-import { Button, TextField ,Grid, Snackbar, Alert,styled,IconButton,Switch, Typography} from '@mui/material';
+import { Button, TextField ,Grid, Snackbar, Alert,styled,Switch, Typography} from '@mui/material';
 import NoteContext from "../context/noteContext"
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -138,10 +138,9 @@ const AddPosts = () => {
     }))
   }
 
- const onSubmit=(props,values)=>{
-  
+ const onSubmit=(values,props)=>{ 
   setLoader(true)
-  console.log("user",file)
+  console.log("user",values)
   const formData= new FormData();
   formData.append("heading",values.heading)
   formData.append("caption",values.caption)
@@ -184,10 +183,8 @@ const AddPosts = () => {
             <Grid item xs={12} sx={{mb:2}}><Field as={CssTextField} label="caption" name="caption" 
             error={props.errors.caption && props.touched.caption}
             helperText={<ErrorMessage name="caption" ></ErrorMessage>} ></Field></Grid>
-           
                 <Grid item xs={12}>
                 <input
-              
               ref={filePickerRef}
               style={{ display: 'none' }}
               type="file"
@@ -198,24 +195,15 @@ const AddPosts = () => {
                 {previewUrl && <img src={previewUrl} style={{maxWidth:"200px",maxHeight:"300px"}} alt="Preview" />}
                 {/* {!previewUrl && <p>Please pick an image.</p>} */}
               </div>
-               <Button variant="contained" startIcon={<AddAPhotoRoundedIcon />} sx={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center",mt:2}}  type="button" onClick={pickImageHandler}>
-                
+               <Button variant="contained" startIcon={<AddAPhotoRoundedIcon />} sx={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center",mt:2}}  type="button" onClick={pickImageHandler}>  
                </Button>
                 </Grid>
-            
            <Grid xs={12} sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}} > 
            <Typography sx={{mt:2,mb:1}}>Allow Comments</Typography>
            <Switch sx={{mt:1}} checked={user.allowComment} onChange={handleToggle} size='medium'  inputProps={{ 'aria-label': 'controlled' }}/></Grid>
 <Grid item xs={12} gutterBottom sx={{display:"flex",flexDirection:"row"}}><LoadingButton loading={loader} variant="contained" type="submit" sx={{alignSelf:"flex-end",marginLeft:"auto",mt:2,width:"100%",maxHeight:"32px"}}>Post</LoadingButton></Grid>
-      
-        
             </Form>
-
-
-
      }
-     
-
       </Formik> 
       <Snackbar open={openSnack} autoHideDuration={4000} onClose={()=>setOpenSnack(false)}>
   <Alert onClose={()=>{setOpenSnack(false)}} severity="success" variant="filled" sx={{ width: '100%' }}>

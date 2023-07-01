@@ -53,6 +53,8 @@ const Cards = (props) => {
   const [like, setLike] = useState(false)
   const [modal, setModal] = useState(false)
   const [animate, setAnimate] = useState(false)
+
+      
  // const base64= btoa(String.fromCharCode(...new Uint8Array(props.image)));
   var date = new Date(props.date);
   var options = {
@@ -143,9 +145,10 @@ var result = date.toLocaleDateString('en', options);
        }else{
           props.onlike(props.id,props.index);
           setLike(true)
+          setAnimate(true)
           // setnum(props.likes.length++)
         }}} >
-         {  like==true? <LikeIcon className={animate==true?"likeIconAnimation":" "}  />  :<FavoriteBorderIcon></FavoriteBorderIcon>    
+         {  like==true? <LikeIcon className={animate==true?"likeIconAnimation":" "}  />  :<FavoriteBorderIcon ></FavoriteBorderIcon>    
          }
         </IconButton>
         <Typography variant="body1" color="text.primary" sx={{alignSelf:"center"}}>{props.displayLikes? props.displayLikes :props.likes.length}</Typography>
