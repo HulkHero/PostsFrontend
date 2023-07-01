@@ -98,15 +98,24 @@ export const useDisLikePostRK = (id) => {
             await kueryClient.cancelQueries(['myposts'])
             const previousData = kueryClient.getQueryData(['myposts'])
             kueryClient.setQueryData(['myposts'], (oldData) => {
+                // const data = oldData.data.filter((val) =>
+                //     val._id != newData.storyId
+                // )
                 const data = oldData.data.map((val) => {
-                    if (val._id == newData.storyId) {
-                        val.likes.pop(id)
-                        return val
-                    }
-                    else {
-                        return val
+                    return {
+                        ...val,
+                        likes: val.likes.filter((val) => val != id)
                     }
                 })
+                // const data = oldData.data.map((val) => {
+                //     if (val._id == newData.storyId) {
+                //         val.likes.pop(id)
+                //         return val
+                //     }
+                //     else {
+                //         return val
+                //     }
+                // })
                 return { data }
             })
             return { previousData }
